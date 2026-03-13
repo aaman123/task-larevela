@@ -39,7 +39,7 @@ export function BlockchainDemo() {
       : "https://etherscan.io/tx/";
 
   return (
-    <div style={styles.page}>
+    <div className="fade-in">
       <h1 style={styles.h1}>Blockchain Demo</h1>
 
       {/* Network info */}
@@ -60,12 +60,12 @@ export function BlockchainDemo() {
       </div>
 
       {/* Wallet card */}
-      <div style={styles.card}>
+      <div className="card" style={{ marginBottom: "1.25rem" }}>
         <h2 style={styles.cardTitle}>Wallet</h2>
         {!isConnected ? (
           <button
             id="connect-wallet-btn"
-            style={styles.btnPrimary}
+            style={{ background: "#f5841f", color: "#fff" }} // MetaMask Orange
             onClick={connect}
           >
             Connect MetaMask
@@ -77,7 +77,10 @@ export function BlockchainDemo() {
                 <p style={styles.label}>Address</p>
                 <p style={styles.mono}>{address}</p>
               </div>
-              <button onClick={disconnect} style={styles.btnGhost}>
+              <button
+                onClick={disconnect}
+                style={{ background: "#f1f5f9", color: "#475569" }}
+              >
                 Disconnect
               </button>
             </div>
@@ -93,13 +96,14 @@ export function BlockchainDemo() {
 
       {/* Faucet */}
       {isConnected && (
-        <div style={styles.card}>
+        <div className="card" style={{ marginBottom: "1.25rem" }}>
           <h2 style={styles.cardTitle}>Faucet</h2>
           <p style={styles.hint}>Mint 100 LRT to your wallet (testnet only).</p>
           <button
             id="faucet-btn"
             style={{
-              ...styles.btnPrimary,
+              background: "var(--brand-gradient)",
+              color: "#fff",
               opacity: txStatus === "pending" ? 0.6 : 1,
             }}
             onClick={handleFaucet}
@@ -112,7 +116,7 @@ export function BlockchainDemo() {
 
       {/* Transfer */}
       {isConnected && (
-        <div style={styles.card}>
+        <div className="card">
           <h2 style={styles.cardTitle}>Transfer LRT</h2>
           <form onSubmit={handleTransfer} style={styles.form}>
             <label style={styles.inputLabel}>
@@ -124,7 +128,6 @@ export function BlockchainDemo() {
                 onChange={(e) => setToAddress(e.target.value)}
                 placeholder="0x..."
                 required
-                style={styles.input}
               />
             </label>
             <label style={styles.inputLabel}>
@@ -138,7 +141,6 @@ export function BlockchainDemo() {
                 min="0"
                 step="any"
                 required
-                style={styles.input}
               />
             </label>
             <button
@@ -146,8 +148,10 @@ export function BlockchainDemo() {
               type="submit"
               disabled={txStatus === "pending" || !toAddress || !amount}
               style={{
-                ...styles.btnPrimary,
+                background: "#3b82f6",
+                color: "#fff",
                 opacity: txStatus === "pending" ? 0.6 : 1,
+                marginTop: "0.5rem",
               }}
             >
               {txStatus === "pending" ? "Waiting for tx…" : "Send"}
@@ -167,7 +171,7 @@ export function BlockchainDemo() {
             rel="noopener noreferrer"
             style={styles.link}
           >
-            View on Etherscan ↗
+            View on Block Explorer ↗
           </a>
         </div>
       )}
@@ -176,38 +180,29 @@ export function BlockchainDemo() {
 }
 
 const styles: Record<string, React.CSSProperties> = {
-  page: { padding: "2rem", maxWidth: "640px", margin: "0 auto" },
   h1: {
-    margin: "0 0 1.25rem",
-    fontSize: "1.5rem",
-    fontWeight: 700,
-    color: "#0f172a",
+    margin: "0 0 1.5rem",
+    fontSize: "1.8rem",
+    color: "var(--text-main)",
   },
   infoBar: {
     display: "flex",
-    gap: "0.75rem",
+    gap: "1rem",
     alignItems: "center",
-    background: "#f8fafc",
-    border: "1px solid #e2e8f0",
-    borderRadius: "8px",
-    padding: "0.75rem 1rem",
-    fontSize: "0.825rem",
-    color: "#475569",
-    marginBottom: "1.25rem",
+    background: "#fff",
+    border: "1px solid var(--border-color)",
+    borderRadius: "12px",
+    padding: "1rem 1.25rem",
+    fontSize: "0.9rem",
+    color: "var(--text-muted)",
+    marginBottom: "2rem",
+    boxShadow: "var(--shadow-sm)",
   },
   dot: { color: "#cbd5e1" },
-  card: {
-    background: "#fff",
-    borderRadius: "12px",
-    boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
-    padding: "1.5rem",
-    marginBottom: "1rem",
-  },
   cardTitle: {
-    margin: "0 0 1rem",
-    fontSize: "1rem",
-    fontWeight: 600,
-    color: "#374151",
+    margin: "0 0 1.25rem",
+    fontSize: "1.15rem",
+    color: "var(--text-main)",
   },
   walletRow: {
     display: "flex",
@@ -216,84 +211,68 @@ const styles: Record<string, React.CSSProperties> = {
     gap: "1rem",
   },
   label: {
-    margin: "0 0 0.25rem",
-    fontSize: "0.75rem",
-    color: "#64748b",
+    margin: "0 0 0.35rem",
+    fontSize: "0.8rem",
+    color: "var(--text-muted)",
     textTransform: "uppercase",
     letterSpacing: "0.05em",
+    fontWeight: 600,
   },
   mono: {
     margin: 0,
     fontFamily: "monospace",
-    fontSize: "0.8rem",
-    color: "#0f172a",
+    fontSize: "0.85rem",
+    color: "var(--text-main)",
     wordBreak: "break-all",
+    background: "#f1f5f9",
+    padding: "0.2rem 0.5rem",
+    borderRadius: "6px",
   },
   balanceBox: {
-    marginTop: "1rem",
-    padding: "0.75rem 1rem",
-    background: "#f0f9ff",
+    marginTop: "1.5rem",
+    padding: "1rem 1.25rem",
+    background: "linear-gradient(135deg, #eff6ff 0%, #f0fdfa 100%)",
     borderRadius: "8px",
+    border: "1px solid #bfdbfe",
   },
   balance: {
     margin: 0,
-    fontSize: "1.75rem",
+    fontSize: "2rem",
     fontWeight: 700,
     color: "#0369a1",
   },
-  ticker: { fontSize: "1rem", fontWeight: 500, color: "#64748b" },
-  hint: { margin: "0 0 0.875rem", color: "#64748b", fontSize: "0.875rem" },
-  form: { display: "flex", flexDirection: "column", gap: "0.875rem" },
+  ticker: { fontSize: "1.1rem", fontWeight: 600, color: "#0ea5e9" },
+  hint: { margin: "0 0 1rem", color: "var(--text-muted)", fontSize: "0.9rem" },
+  form: { display: "flex", flexDirection: "column", gap: "1.25rem" },
   inputLabel: {
     display: "flex",
     flexDirection: "column",
-    gap: "0.3rem",
-    fontSize: "0.875rem",
-    fontWeight: 500,
-    color: "#374151",
-  },
-  input: {
-    padding: "0.5rem 0.75rem",
-    border: "1px solid #d1d5db",
-    borderRadius: "8px",
+    gap: "0.5rem",
     fontSize: "0.9rem",
-  },
-  btnPrimary: {
-    padding: "0.6rem 1.25rem",
-    background: "#3b82f6",
-    color: "#fff",
-    border: "none",
-    borderRadius: "8px",
-    fontWeight: 600,
-    fontSize: "0.875rem",
-    cursor: "pointer",
-  },
-  btnGhost: {
-    padding: "0.45rem 0.875rem",
-    background: "#f1f5f9",
-    color: "#374151",
-    border: "1px solid #e2e8f0",
-    borderRadius: "8px",
     fontWeight: 500,
-    fontSize: "0.8rem",
-    cursor: "pointer",
-    flexShrink: 0,
+    color: "var(--text-main)",
   },
   errorBox: {
-    padding: "0.875rem 1rem",
-    background: "#fef2f2",
-    color: "#b91c1c",
+    padding: "1rem 1.25rem",
+    background: "var(--error-bg)",
+    color: "var(--error-text)",
     borderRadius: "8px",
-    fontSize: "0.875rem",
-    marginTop: "0.5rem",
+    fontSize: "0.9rem",
+    marginTop: "1rem",
+    fontWeight: 500,
   },
   successBox: {
-    padding: "0.875rem 1rem",
-    background: "#f0fdf4",
-    color: "#15803d",
+    padding: "1rem 1.25rem",
+    background: "var(--success-bg)",
+    color: "var(--success-text)",
     borderRadius: "8px",
-    fontSize: "0.875rem",
-    marginTop: "0.5rem",
+    fontSize: "0.9rem",
+    marginTop: "1rem",
+    fontWeight: 500,
   },
-  link: { color: "#15803d", fontWeight: 600 },
+  link: {
+    color: "var(--success-text)",
+    fontWeight: 600,
+    textDecoration: "underline",
+  },
 };

@@ -53,12 +53,15 @@ export function WebsitesPage() {
   };
 
   return (
-    <div style={styles.page}>
+    <div className="fade-in">
       <div style={styles.titleBar}>
-        <h1 style={styles.h1}>Websites</h1>
+        <h1>Websites</h1>
         <button
           id="add-website-btn"
-          style={styles.btnPrimary}
+          style={{
+            background: showCreate ? "#f1f5f9" : "var(--brand-gradient)",
+            color: showCreate ? "#333" : "#fff",
+          }}
           onClick={() => setShowCreate((v) => !v)}
         >
           {showCreate ? "Cancel" : "+ Add Website"}
@@ -67,8 +70,13 @@ export function WebsitesPage() {
 
       {/* Create form */}
       {showCreate && (
-        <div style={styles.card}>
-          <h2 style={styles.cardTitle}>Add Website</h2>
+        <div
+          className="card"
+          style={{ marginBottom: "1.5rem", borderLeft: "4px solid #3b82f6" }}
+        >
+          <h2 style={{ fontSize: "1.1rem", marginBottom: "1rem" }}>
+            Add New Website
+          </h2>
           {createWebsite.isError && (
             <ErrorMessage
               message={
@@ -87,7 +95,6 @@ export function WebsitesPage() {
               onChange={(e) => setNewDomain(e.target.value)}
               placeholder="store.example.com"
               required
-              style={styles.input}
             />
             <select
               id="new-platform"
@@ -112,8 +119,10 @@ export function WebsitesPage() {
               type="submit"
               disabled={createWebsite.isPending || !newDomain.trim()}
               style={{
-                ...styles.btnPrimary,
+                background: "#3b82f6",
+                color: "#fff",
                 opacity: createWebsite.isPending ? 0.6 : 1,
+                whiteSpace: "nowrap",
               }}
             >
               {createWebsite.isPending ? "Creating…" : "Create"}
@@ -139,26 +148,35 @@ export function WebsitesPage() {
         </div>
       )}
 
-      {websites.map((site) => (
-        <WebsiteRow
-          key={site.id}
-          site={site}
-          editState={editState?.id === site.id ? editState : null}
-          onEdit={() =>
-            setEditState({
-              id: site.id,
-              platform: site.platform ?? "",
-              display_name: site.domain,
-            })
-          }
-          onCancelEdit={() => setEditState(null)}
-          onSaved={() => setEditState(null)}
-          onDelete={() => handleDelete(site.id)}
-        />
-      ))}
+      <div style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+        {websites.map((site) => (
+          <WebsiteRow
+            key={site.id}
+            site={site}
+            editState={editState?.id === site.id ? editState : null}
+            onEdit={() =>
+              setEditState({
+                id: site.id,
+                platform: site.platform ?? "",
+                display_name: site.domain,
+              })
+            }
+            onCancelEdit={() => setEditState(null)}
+            onSaved={() => setEditState(null)}
+            onDelete={() => handleDelete(site.id)}
+          />
+        ))}
+      </div>
 
       {data?.pagination && (
-        <p style={styles.pagination}>
+        <p
+          style={{
+            marginTop: "1.5rem",
+            color: "var(--text-muted)",
+            fontSize: "0.85rem",
+            textAlign: "right",
+          }}
+        >
           Showing {websites.length} of {data.pagination.total} websites
         </p>
       )}
@@ -204,7 +222,7 @@ function WebsiteRow({
   };
 
   return (
-    <div style={styles.card}>
+    <div className="card" style={{ padding: "1.25rem 1.5rem" }}>
       {editState ? (
         <form onSubmit={handleSave} style={styles.formRow}>
           {updateWebsite.isError && (
@@ -234,40 +252,61 @@ function WebsiteRow({
           <button
             type="submit"
             disabled={updateWebsite.isPending}
-            style={styles.btnPrimary}
+            style={{ background: "#10b981", color: "#fff" }}
           >
             {updateWebsite.isPending ? "Saving…" : "Save"}
           </button>
-          <button type="button" onClick={onCancelEdit} style={styles.btnGhost}>
+          <button
+            type="button"
+            onClick={onCancelEdit}
+            style={{ background: "#f1f5f9", color: "#475569" }}
+          >
             Cancel
           </button>
         </form>
       ) : (
         <div style={styles.rowContent}>
-          <div>
+          <div
+            style={{ display: "flex", flexDirection: "column", gap: "0.25rem" }}
+          >
             <span style={styles.domain}>{site.domain}</span>
-            <span style={styles.platform}>{site.platform ?? "—"}</span>
+            <span
+              style={{
+                fontSize: "0.8rem",
+                color: "var(--text-muted)",
+                textTransform: "uppercase",
+                letterSpacing: "0.05em",
+                fontWeight: 600,
+              }}
+            >
+              {site.platform ?? "Unspecified"}
+            </span>
           </div>
           <div style={styles.rowActions}>
             <span
               style={{
-                ...styles.statusBadge,
+                fontSize: "0.8rem",
+                fontWeight: 600,
+                padding: "0.25rem 0.6rem",
+                borderRadius: "12px",
+                background: `${statusColor[site.status] ?? "#6b7280"}1a`, // 10% opacity bg
                 color: statusColor[site.status] ?? "#6b7280",
+                marginRight: "0.5rem",
               }}
             >
-              ● {site.status}
+              ● {site.status.toUpperCase()}
             </span>
             <button
               id={`edit-${site.id}`}
               onClick={onEdit}
-              style={styles.btnGhost}
+              style={{ background: "#f1f5f9", color: "#475569" }}
             >
               Edit
             </button>
             <button
               id={`delete-${site.id}`}
               onClick={onDelete}
-              style={styles.btnDanger}
+              style={{ background: "#fef2f2", color: "#dc2626" }}
             >
               Delete
             </button>
@@ -279,99 +318,42 @@ function WebsiteRow({
 }
 
 const styles: Record<string, React.CSSProperties> = {
-  page: { padding: "2rem", maxWidth: "900px", margin: "0 auto" },
   titleBar: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    marginBottom: "1.5rem",
-  },
-  h1: { margin: 0, fontSize: "1.5rem", fontWeight: 700, color: "#0f172a" },
-  card: {
-    background: "#fff",
-    borderRadius: "10px",
-    boxShadow: "0 1px 6px rgba(0,0,0,0.07)",
-    padding: "1rem 1.25rem",
-    marginBottom: "0.75rem",
-  },
-  cardTitle: {
-    margin: "0 0 0.875rem",
-    fontSize: "1rem",
-    fontWeight: 600,
-    color: "#374151",
+    marginBottom: "2rem",
   },
   formRow: {
     display: "flex",
-    gap: "0.75rem",
+    gap: "1rem",
     alignItems: "center",
     flexWrap: "wrap",
   },
-  input: {
-    flex: "1 1 200px",
-    padding: "0.5rem 0.75rem",
-    border: "1px solid #d1d5db",
-    borderRadius: "8px",
-    fontSize: "0.875rem",
-  },
   select: {
-    padding: "0.5rem 0.75rem",
-    border: "1px solid #d1d5db",
+    padding: "0.6rem 0.875rem",
+    border: "1px solid var(--border-color)",
     borderRadius: "8px",
-    fontSize: "0.875rem",
+    fontSize: "0.95rem",
     background: "#fff",
+    outline: "none",
   },
   rowContent: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
     flexWrap: "wrap",
-    gap: "0.5rem",
+    gap: "1rem",
   },
   rowActions: { display: "flex", gap: "0.5rem", alignItems: "center" },
   domain: {
     fontWeight: 600,
-    color: "#0f172a",
-    fontSize: "0.9rem",
-    marginRight: "0.5rem",
+    fontSize: "1.05rem",
+    color: "var(--text-main)",
   },
-  platform: { color: "#64748b", fontSize: "0.8rem" },
-  statusBadge: { fontSize: "0.8rem", fontWeight: 500 },
-  btnPrimary: {
-    padding: "0.5rem 1rem",
-    background: "#3b82f6",
-    color: "#fff",
-    border: "none",
-    borderRadius: "8px",
-    fontWeight: 600,
-    fontSize: "0.875rem",
-    cursor: "pointer",
-    whiteSpace: "nowrap",
-  },
-  btnGhost: {
-    padding: "0.45rem 0.875rem",
-    background: "#f1f5f9",
-    color: "#374151",
-    border: "1px solid #e2e8f0",
-    borderRadius: "8px",
-    fontWeight: 500,
-    fontSize: "0.8rem",
-    cursor: "pointer",
-  },
-  btnDanger: {
-    padding: "0.45rem 0.875rem",
-    background: "#fef2f2",
-    color: "#dc2626",
-    border: "1px solid #fecaca",
-    borderRadius: "8px",
-    fontWeight: 500,
-    fontSize: "0.8rem",
-    cursor: "pointer",
-  },
-  empty: { textAlign: "center", padding: "3rem 1rem", color: "#94a3b8" },
-  pagination: {
-    marginTop: "1rem",
-    color: "#94a3b8",
-    fontSize: "0.8rem",
-    textAlign: "right",
+  empty: {
+    textAlign: "center",
+    padding: "4rem 1rem",
+    color: "var(--text-muted)",
   },
 };
