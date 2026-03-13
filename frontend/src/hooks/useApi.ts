@@ -1,59 +1,62 @@
-import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { api } from '../api';
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { api } from "../api";
+import type {
+  WebsiteListResponse,
+  WebsiteDetailResponse,
+  WebsiteCreateRequest,
+  WebsiteCreateResponse,
+  WebsiteUpdateRequest,
+  WebsiteDeleteResponse,
+} from "../types";
 
-/**
- * Example hook for GET list – replace path and type with your Swagger endpoints.
- */
-export function useItemsList(params?: { page?: number; limit?: number }) {
+const WEBSITES_KEY = ["websites"] as const;
+
+/** GET /api/v1/websites – paginated list */
+export function useWebsites(params?: { limit?: number; offset?: number }) {
   return useQuery({
-    queryKey: ['items', params],
-    queryFn: () => api.get<{ data: unknown[] }>('/items', { params }),
+    queryKey: [...WEBSITES_KEY, params],
+    queryFn: () =>
+      api.get<WebsiteListResponse>("/api/v1/websites", {
+        params: params as Record<string, string | number | boolean | undefined>,
+      }),
   });
 }
 
-/**
- * Example hook for GET by id.
- */
-export function useItem(id: string | null) {
+/** GET /api/v1/websites/:id – detail */
+export function useWebsite(id: string | null) {
   return useQuery({
-    queryKey: ['items', id],
-    queryFn: () => api.get<unknown>(`/items/${id}`),
+    queryKey: [...WEBSITES_KEY, id],
+    queryFn: () => api.get<WebsiteDetailResponse>(`/api/v1/websites/${id}`),
     enabled: !!id,
   });
 }
 
-/**
- * Example hook for POST create – replace path and body type with your API.
- */
-export function useCreateItem() {
+/** POST /api/v1/websites */
+export function useCreateWebsite() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (body: Record<string, unknown>) => api.post<unknown>('/items', body),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['items'] }),
+    mutationFn: (body: WebsiteCreateRequest) =>
+      api.post<WebsiteCreateResponse>("/api/v1/websites", body),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: WEBSITES_KEY }),
   });
 }
 
-/**
- * Example hook for PUT/PATCH update.
- */
-export function useUpdateItem(id: string) {
+/** PUT /api/v1/websites/:id */
+export function useUpdateWebsite(id: string) {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (body: Record<string, unknown>) => api.patch<unknown>(`/items/${id}`, body),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['items'] });
-      queryClient.invalidateQueries({ queryKey: ['items', id] });
-    },
+    mutationFn: (body: WebsiteUpdateRequest) =>
+      api.put<WebsiteDetailResponse>(`/api/v1/websites/${id}`, body),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: WEBSITES_KEY }),
   });
 }
 
-/**
- * Example hook for DELETE.
- */
-export function useDeleteItem() {
+/** DELETE /api/v1/websites/:id */
+export function useDeleteWebsite() {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: (id: string) => api.delete(`/items/${id}`),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['items'] }),
+    mutationFn: (id: string) =>
+      api.delete<WebsiteDeleteResponse>(`/api/v1/websites/${id}`),
+    onSuccess: () => queryClient.invalidateQueries({ queryKey: WEBSITES_KEY }),
   });
 }

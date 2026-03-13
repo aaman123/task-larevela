@@ -1,0 +1,5591 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "LaRevela-API",
+    "description": "Public REST API powering LaRevela. Use the interactive docs to explore authentication, registration, and item endpoints.",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/api/v1/auth/send-verification-code": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "1. Send verification code",
+        "operationId": "send_verification_code_api_v1_auth_send_verification_code_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SendVerificationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SendVerificationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/verify-email": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "2. Verify email",
+        "operationId": "verify_email_api_v1_auth_verify_email_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/VerifyEmailRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/VerifyEmailResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/register/draft": {
+      "put": {
+        "tags": ["Auth"],
+        "summary": "4. Save registration draft (company)",
+        "operationId": "save_registration_draft_api_v1_auth_register_draft_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SaveDraftRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SaveDraftResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Auth"],
+        "summary": "3. Create registration draft (profile)",
+        "operationId": "create_registration_draft_api_v1_auth_register_draft_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/CreateDraftRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SaveDraftResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/register": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "5. Finalize registration",
+        "operationId": "finalize_registration_api_v1_auth_register_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/FinalizeRegistrationRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/FinalizeRegistrationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/login": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Sign in",
+        "operationId": "login_api_v1_auth_login_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/LoginRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/LoginResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/logout": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Logout current session",
+        "operationId": "logout_api_v1_auth_logout_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/LogoutResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/forgot-password": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Request password reset",
+        "operationId": "request_password_reset_api_v1_auth_forgot_password_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ForgotPasswordRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ForgotPasswordResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/reset-password": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Reset password",
+        "operationId": "reset_password_api_v1_auth_reset_password_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ResetPasswordRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResetPasswordResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/auth/reset-password/with-token": {
+      "post": {
+        "tags": ["Auth"],
+        "summary": "Reset password using token only (forgot-password flow)",
+        "operationId": "reset_password_with_token_only_api_v1_auth_reset_password_with_token_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/ResetPasswordWithTokenOnlyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResetPasswordResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/account": {
+      "get": {
+        "tags": ["Account"],
+        "summary": "Retrieve account metadata",
+        "operationId": "get_account_metadata_api_v1_account_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/AccountResponse" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Account"],
+        "summary": "Update account metadata",
+        "operationId": "update_account_metadata_api_v1_account_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/AccountUpdateRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/AccountUpdateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/analytics/overview": {
+      "get": {
+        "tags": ["Analytics"],
+        "summary": "Analytics overview for a website",
+        "operationId": "analytics_overview_analytics_overview_get",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "title": "Website Id"
+            }
+          },
+          {
+            "name": "range",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "$ref": "#/components/schemas/AnalyticsRange",
+              "default": "30d"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Analytics Overview Analytics Overview Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/plans": {
+      "get": {
+        "tags": ["Billing"],
+        "summary": "List available billing plans",
+        "operationId": "list_plans_api_v1_billing_plans_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/PlansResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/subscribe": {
+      "post": {
+        "tags": ["Billing"],
+        "summary": "Create a subscription",
+        "operationId": "subscribe_to_plan_api_v1_billing_subscribe_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/SubscribeRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/SubscribeResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/subscription": {
+      "get": {
+        "tags": ["Billing"],
+        "summary": "Fetch the active subscription",
+        "operationId": "get_subscription_api_v1_billing_subscription_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Billing"],
+        "summary": "Update the active subscription",
+        "operationId": "update_subscription_api_v1_billing_subscription_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubscriptionUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SubscriptionResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/subscription/cancel": {
+      "post": {
+        "tags": ["Billing"],
+        "summary": "Cancel the active subscription",
+        "operationId": "cancel_subscription_api_v1_billing_subscription_cancel_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/SubscriptionCancelRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericBillingResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/payment-methods": {
+      "get": {
+        "tags": ["Billing"],
+        "summary": "List payment methods",
+        "operationId": "list_payment_methods_api_v1_billing_payment_methods_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PaymentMethodsResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": ["Billing"],
+        "summary": "Add a payment method",
+        "operationId": "add_payment_method_api_v1_billing_payment_methods_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentMethodCreateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericBillingResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/payment-methods/{payment_method_id}": {
+      "put": {
+        "tags": ["Billing"],
+        "summary": "Update a payment method",
+        "operationId": "update_payment_method_api_v1_billing_payment_methods__payment_method_id__put",
+        "parameters": [
+          {
+            "name": "payment_method_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Payment Method Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/PaymentMethodUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericBillingResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Billing"],
+        "summary": "Delete a payment method",
+        "operationId": "delete_payment_method_api_v1_billing_payment_methods__payment_method_id__delete",
+        "parameters": [
+          {
+            "name": "payment_method_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Payment Method Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericBillingResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/invoices": {
+      "get": {
+        "tags": ["Billing"],
+        "summary": "List invoices",
+        "operationId": "list_invoices_api_v1_billing_invoices_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Maximum invoices to return",
+              "default": 12,
+              "title": "Limit"
+            },
+            "description": "Maximum invoices to return"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of invoices to skip",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "Number of invoices to skip"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoicesListResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/invoices/{invoice_id}/download": {
+      "get": {
+        "tags": ["Billing"],
+        "summary": "Download invoice",
+        "operationId": "download_invoice_api_v1_billing_invoices__invoice_id__download_get",
+        "parameters": [
+          {
+            "name": "invoice_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Invoice Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/InvoiceDownloadResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/contact": {
+      "get": {
+        "tags": ["Billing"],
+        "summary": "Get billing contact",
+        "operationId": "get_billing_contact_api_v1_billing_contact_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BillingContactResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Billing"],
+        "summary": "Update billing contact",
+        "operationId": "update_billing_contact_api_v1_billing_contact_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/BillingContactRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/BillingContactResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/billing/notifications": {
+      "get": {
+        "tags": ["Billing"],
+        "summary": "Get notification preferences",
+        "operationId": "get_notification_preferences_api_v1_billing_notifications_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationPreferencesResponse"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Billing"],
+        "summary": "Update notification preferences",
+        "operationId": "update_notification_preferences_api_v1_billing_notifications_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NotificationPreferencesRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/NotificationPreferencesResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/demo-requests": {
+      "post": {
+        "tags": ["Demo Requests"],
+        "summary": "Submit a demo request",
+        "operationId": "submit_demo_request_api_v1_demo_requests_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/DemoRequestCreate" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DemoRequestCreateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/contact-messages": {
+      "post": {
+        "tags": ["Contact Messages"],
+        "summary": "Submit a contact form message",
+        "operationId": "submit_contact_message_api_v1_contact_messages_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ContactMessageCreate" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ContactMessageCreateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/identities": {
+      "get": {
+        "tags": ["Identities"],
+        "summary": "Paginated revealed identities for a website",
+        "operationId": "list_identities_identities_get",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "minLength": 1,
+              "title": "Website Id"
+            }
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 1,
+              "default": 1,
+              "title": "Page"
+            }
+          },
+          {
+            "name": "page_size",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 500,
+              "minimum": 1,
+              "default": 100,
+              "title": "Page Size"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response List Identities Identities Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/identities/export": {
+      "post": {
+        "tags": ["Identities"],
+        "summary": "Request identities export for a website",
+        "description": "Queue an identities export job for a website.\n\nThis endpoint validates access, records the export request, and dispatches\na background job via SQS for asynchronous processing.",
+        "operationId": "request_identities_export_identities_export_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/IdentitiesExportRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/IdentitiesExportResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/me": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "Retrieve the signed-in user's profile",
+        "operationId": "get_my_profile_api_v1_users_me_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/UserProfileResponse" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Users"],
+        "summary": "Update the signed-in user's profile",
+        "operationId": "update_my_profile_api_v1_users_me_put",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/UserProfileUpdateRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserProfileUpdateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/me/change-password": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Update the signed-in user's password",
+        "operationId": "change_my_password_api_v1_users_me_change_password_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/ChangePasswordRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ChangePasswordResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/me/2fa/enable": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Begin two-factor authentication enrollment",
+        "operationId": "enable_two_factor_api_v1_users_me_2fa_enable_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TwoFactorEnableRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TwoFactorEnableResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/me/2fa/verify": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Confirm two-factor authentication setup",
+        "operationId": "verify_two_factor_api_v1_users_me_2fa_verify_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TwoFactorVerifyRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/TwoFactorVerifyResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/me/sessions": {
+      "get": {
+        "tags": ["Users"],
+        "summary": "List active sessions for the signed-in user",
+        "operationId": "list_my_sessions_api_v1_users_me_sessions_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/UserSessionsResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/users/me/sessions/{session_id}/logout": {
+      "post": {
+        "tags": ["Users"],
+        "summary": "Revoke a specific session for the signed-in user",
+        "operationId": "revoke_session_api_v1_users_me_sessions__session_id__logout_post",
+        "parameters": [
+          {
+            "name": "session_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Session Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/LogoutResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/health": {
+      "get": {
+        "tags": ["Health"],
+        "summary": "Health check",
+        "operationId": "healthcheck_health_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "additionalProperties": { "type": "string" },
+                  "type": "object",
+                  "title": "Response Healthcheck Health Get"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lookups": {
+      "get": {
+        "tags": ["Lookups"],
+        "summary": "List available lookup collections",
+        "operationId": "list_lookup_collections_api_v1_lookups_get",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/LookupNamesResponse" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/lookups/{lookup_name}": {
+      "get": {
+        "tags": ["Lookups"],
+        "summary": "Fetch entries from a lookup collection",
+        "operationId": "get_lookup_api_v1_lookups__lookup_name__get",
+        "parameters": [
+          {
+            "name": "lookup_name",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Lookup Name" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/LookupResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/pixel/bootstrap": {
+      "get": {
+        "tags": ["Pixel"],
+        "summary": "Bootstrap LaRevela pixel configuration",
+        "operationId": "bootstrap_pixel_api_v1_pixel_bootstrap_get",
+        "parameters": [
+          {
+            "name": "origin",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Origin"
+            }
+          },
+          {
+            "name": "env",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Env"
+            }
+          },
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Origin"
+            }
+          },
+          {
+            "name": "Referer",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Referer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PixelBootstrapConfig"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/teams/members": {
+      "get": {
+        "tags": ["Teams"],
+        "summary": "List account members",
+        "operationId": "list_team_members_api_v1_teams_members_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Maximum members to return",
+              "default": 20,
+              "title": "Limit"
+            },
+            "description": "Maximum members to return"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Records to skip before returning results",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "Records to skip before returning results"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TeamMembersResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/teams/invite": {
+      "post": {
+        "tags": ["Teams"],
+        "summary": "Invite a new member",
+        "operationId": "invite_team_member_api_v1_teams_invite_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/TeamInviteRequest" }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/TeamInviteResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/teams/members/{member_id}": {
+      "put": {
+        "tags": ["Teams"],
+        "summary": "Update an existing member",
+        "operationId": "update_team_member_api_v1_teams_members__member_id__put",
+        "parameters": [
+          {
+            "name": "member_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Member Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TeamMemberUpdateRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericSuccessResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Teams"],
+        "summary": "Remove a member from the account",
+        "operationId": "remove_team_member_api_v1_teams_members__member_id__delete",
+        "parameters": [
+          {
+            "name": "member_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Member Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericSuccessResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/teams/settings": {
+      "post": {
+        "tags": ["Teams"],
+        "summary": "Update account security settings",
+        "operationId": "update_security_settings_api_v1_teams_settings_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/TeamSecuritySettingsRequest"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/GenericSuccessResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/webhook/collect": {
+      "post": {
+        "tags": ["Event Collection"],
+        "summary": "Collect client-side interaction events",
+        "operationId": "collect_event_api_v1_webhook_collect_post",
+        "parameters": [
+          {
+            "name": "Origin",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Origin"
+            }
+          },
+          {
+            "name": "Referer",
+            "in": "header",
+            "required": false,
+            "schema": {
+              "anyOf": [{ "type": "string" }, { "type": "null" }],
+              "title": "Referer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EventCollectionPayload"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": { "type": "string" },
+                  "title": "Response Collect Event Api V1 Webhook Collect Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/websites": {
+      "post": {
+        "tags": ["Websites"],
+        "summary": "Create a website",
+        "operationId": "create_website_api_v1_websites_post",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/WebsiteCreateRequest" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebsiteCreateResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Websites"],
+        "summary": "List websites",
+        "operationId": "list_websites_api_v1_websites_get",
+        "parameters": [
+          {
+            "name": "limit",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "maximum": 100,
+              "minimum": 1,
+              "description": "Maximum websites to return",
+              "default": 20,
+              "title": "Limit"
+            },
+            "description": "Maximum websites to return"
+          },
+          {
+            "name": "offset",
+            "in": "query",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "minimum": 0,
+              "description": "Number of websites to skip before listing",
+              "default": 0,
+              "title": "Offset"
+            },
+            "description": "Number of websites to skip before listing"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/WebsiteListResponse" }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/websites/{website_id}/sync/profile": {
+      "post": {
+        "tags": ["Websites"],
+        "summary": "Trigger Klaviyo profile sync for a website",
+        "operationId": "trigger_klaviyo_profile_sync_api_v1_websites__website_id__sync_profile_post",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Trigger Klaviyo Profile Sync Api V1 Websites  Website Id  Sync Profile Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/websites/{website_id}/sync/events": {
+      "post": {
+        "tags": ["Websites"],
+        "summary": "Trigger Klaviyo event sync for a website",
+        "operationId": "trigger_klaviyo_event_sync_api_v1_websites__website_id__sync_events_post",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Trigger Klaviyo Event Sync Api V1 Websites  Website Id  Sync Events Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/websites/{website_id}/sync/lists": {
+      "post": {
+        "tags": ["Websites"],
+        "summary": "Trigger Klaviyo list sync for a website",
+        "operationId": "trigger_klaviyo_list_sync_api_v1_websites__website_id__sync_lists_post",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Trigger Klaviyo List Sync Api V1 Websites  Website Id  Sync Lists Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/websites/{website_id}/sync-status/{sync_type}": {
+      "get": {
+        "tags": ["Websites"],
+        "summary": "Get latest Klaviyo sync job status for a website and sync type (internal)",
+        "operationId": "get_latest_klaviyo_sync_status_api_v1_websites__website_id__sync_status__sync_type__get",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          },
+          {
+            "name": "sync_type",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Sync Type" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Latest Klaviyo Sync Status Api V1 Websites  Website Id  Sync Status  Sync Type  Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/websites/{website_id}": {
+      "get": {
+        "tags": ["Websites"],
+        "summary": "Get website detail",
+        "operationId": "get_website_detail_api_v1_websites__website_id__get",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebsiteDetailResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": ["Websites"],
+        "summary": "Update website metadata",
+        "operationId": "update_website_api_v1_websites__website_id__put",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/WebsiteUpdateRequest" }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebsiteDetailResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": ["Websites"],
+        "summary": "Delete website",
+        "operationId": "delete_website_api_v1_websites__website_id__delete",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebsiteDeleteResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/websites/{website_id}/privacy-ack": {
+      "put": {
+        "tags": ["Websites"],
+        "summary": "Acknowledge website privacy policy",
+        "operationId": "acknowledge_privacy_api_v1_websites__website_id__privacy_ack_put",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebsitePrivacyAckRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebsiteDetailResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/websites/{website_id}/vendor-config": {
+      "put": {
+        "tags": ["Websites"],
+        "summary": "Update website-specific vendor configuration",
+        "description": "Upsert per-website vendor secrets and refresh origin cache.\n\nThis is used for integrations like Klaviyo, Shopify, etc., where\nthe secrets are scoped to a specific website rather than global\nLaRevela credentials.",
+        "operationId": "update_website_vendor_config_api_v1_websites__website_id__vendor_config_put",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebsiteVendorConfigUpdate"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Update Website Vendor Config Api V1 Websites  Website Id  Vendor Config Put"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": ["Websites"],
+        "summary": "Get website-specific vendor configuration",
+        "description": "Return all vendor configs for a website.\n\nThis allows the UI or services to read back the per-website vendor\nsecrets that were previously stored via the PUT endpoint.",
+        "operationId": "get_website_vendor_config_api_v1_websites__website_id__vendor_config_get",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Website Vendor Config Api V1 Websites  Website Id  Vendor Config Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/websites/{website_id}/verify": {
+      "post": {
+        "tags": ["Websites"],
+        "summary": "Trigger website verification",
+        "operationId": "trigger_website_verification_api_v1_websites__website_id__verify_post",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/WebsiteVerificationTriggerRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/WebsiteVerificationResponse"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/websites/{website_id}/push/profile": {
+      "post": {
+        "tags": ["Websites"],
+        "summary": "Trigger Klaviyo profile push for a website",
+        "operationId": "trigger_klaviyo_profile_push_api_v1_websites__website_id__push_profile_post",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Trigger Klaviyo Profile Push Api V1 Websites  Website Id  Push Profile Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/websites/{website_id}/push/events": {
+      "post": {
+        "tags": ["Websites"],
+        "summary": "Trigger Klaviyo events push for a website",
+        "operationId": "trigger_klaviyo_event_push_api_v1_websites__website_id__push_events_post",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Trigger Klaviyo Event Push Api V1 Websites  Website Id  Push Events Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/websites/{website_id}/push/lists": {
+      "post": {
+        "tags": ["Websites"],
+        "summary": "Trigger Klaviyo lists push for a website",
+        "operationId": "trigger_klaviyo_list_push_api_v1_websites__website_id__push_lists_post",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Trigger Klaviyo List Push Api V1 Websites  Website Id  Push Lists Post"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/websites/{website_id}/sync-status/profile_push": {
+      "get": {
+        "tags": ["Websites"],
+        "summary": "Get latest Klaviyo profile push job status for a website",
+        "operationId": "get_latest_klaviyo_profile_push_status_api_v1_websites__website_id__sync_status_profile_push_get",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Latest Klaviyo Profile Push Status Api V1 Websites  Website Id  Sync Status Profile Push Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/websites/{website_id}/sync-status/event_push": {
+      "get": {
+        "tags": ["Websites"],
+        "summary": "Get latest Klaviyo event push job status for a website",
+        "operationId": "get_latest_klaviyo_event_push_status_api_v1_websites__website_id__sync_status_event_push_get",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Latest Klaviyo Event Push Status Api V1 Websites  Website Id  Sync Status Event Push Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/v1/websites/{website_id}/sync-status/list_push": {
+      "get": {
+        "tags": ["Websites"],
+        "summary": "Get latest Klaviyo list push job status for a website",
+        "operationId": "get_latest_klaviyo_list_push_status_api_v1_websites__website_id__sync_status_list_push_get",
+        "parameters": [
+          {
+            "name": "website_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "title": "Website Id" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "additionalProperties": true,
+                  "title": "Response Get Latest Klaviyo List Push Status Api V1 Websites  Website Id  Sync Status List Push Get"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/HTTPValidationError" }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "AccountMetadata": {
+        "properties": {
+          "account_id": { "type": "string", "title": "Account Id" },
+          "account_name": { "type": "string", "title": "Account Name" },
+          "legal_name": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Legal Name"
+          },
+          "industry": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Industry"
+          },
+          "company_size_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Company Size Id"
+          },
+          "company_size": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Company Size"
+          },
+          "address_line1": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Address Line1"
+          },
+          "address_line2": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Address Line2"
+          },
+          "city": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "City"
+          },
+          "state_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "State Id"
+          },
+          "state": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "State"
+          },
+          "postal_code": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Postal Code"
+          },
+          "country_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Country Id"
+          },
+          "country": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Country"
+          },
+          "tax_id": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Tax Id"
+          },
+          "vat_number": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Vat Number"
+          },
+          "tax_exempt": { "type": "boolean", "title": "Tax Exempt" },
+          "tax_exempt_note": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Tax Exempt Note"
+          },
+          "language_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Language Id"
+          },
+          "language": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Language"
+          },
+          "timezone_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Timezone Id"
+          },
+          "timezone": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Timezone"
+          },
+          "currency_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Currency Id"
+          },
+          "currency": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Currency"
+          },
+          "business_info": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Business Info"
+          },
+          "business_type_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Business Type Id"
+          },
+          "business_type": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Business Type"
+          },
+          "date_format_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Date Format Id"
+          },
+          "date_format": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Date Format"
+          },
+          "account_status": { "type": "string", "title": "Account Status" },
+          "updated_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Updated At"
+          }
+        },
+        "type": "object",
+        "required": [
+          "account_id",
+          "account_name",
+          "tax_exempt",
+          "account_status"
+        ],
+        "title": "AccountMetadata"
+      },
+      "AccountResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/AccountMetadata" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "AccountResponse"
+      },
+      "AccountUpdateAddress": {
+        "properties": {
+          "line1": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Line1",
+            "description": "Primary street address line.",
+            "example": "45 Prospect Street"
+          },
+          "line2": {
+            "anyOf": [
+              { "type": "string", "maxLength": 255 },
+              { "type": "null" }
+            ],
+            "title": "Line2",
+            "description": "Suite, floor, or unit (omit if not applicable).",
+            "example": "Suite 500"
+          },
+          "city": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "City",
+            "description": "City or locality.",
+            "example": "Brooklyn"
+          },
+          "state": {
+            "anyOf": [
+              { "type": "string", "maxLength": 50, "minLength": 2 },
+              { "type": "null" }
+            ],
+            "title": "State",
+            "description": "State or province code (US two-letter ISO when applicable).",
+            "example": "NY"
+          },
+          "postal_code": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Postal Code",
+            "description": "Postal or ZIP code.",
+            "example": "11215"
+          },
+          "country": {
+            "type": "string",
+            "maxLength": 2,
+            "minLength": 2,
+            "title": "Country",
+            "description": "ISO-3166 alpha-2 country code (see /api/v1/lookups/countries).",
+            "example": "US"
+          }
+        },
+        "type": "object",
+        "required": ["line1", "city", "postal_code", "country"],
+        "title": "AccountUpdateAddress"
+      },
+      "AccountUpdateRequest": {
+        "properties": {
+          "legal_name": {
+            "anyOf": [
+              { "type": "string", "maxLength": 255 },
+              { "type": "null" }
+            ],
+            "title": "Legal Name",
+            "description": "Legal business name used for billing documents.",
+            "example": "Acme Retail LLC"
+          },
+          "industry": {
+            "anyOf": [
+              { "type": "string", "maxLength": 100 },
+              { "type": "null" }
+            ],
+            "title": "Industry",
+            "description": "Industry lookup code (see /api/v1/lookups/industries).",
+            "example": "retail"
+          },
+          "company_size": {
+            "anyOf": [
+              { "type": "string", "maxLength": 20 },
+              { "type": "null" }
+            ],
+            "title": "Company Size",
+            "description": "Company size lookup code (see /api/v1/lookups/company-sizes).",
+            "example": "11-50"
+          },
+          "business_info": {
+            "anyOf": [
+              { "type": "string", "maxLength": 1000 },
+              { "type": "null" }
+            ],
+            "title": "Business Info",
+            "description": "Optional free-form business summary that appears in internal tools.",
+            "example": "Omnichannel retailer operating 12 storefronts."
+          },
+          "business_type": {
+            "anyOf": [
+              { "type": "string", "maxLength": 50 },
+              { "type": "null" }
+            ],
+            "title": "Business Type",
+            "description": "Business type lookup code (see /api/v1/lookups/business-types).",
+            "example": "llc"
+          },
+          "address": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/AccountUpdateAddress" },
+              { "type": "null" }
+            ],
+            "description": "Optional structured address for the primary headquarters."
+          },
+          "tax_id": {
+            "anyOf": [
+              { "type": "string", "maxLength": 50 },
+              { "type": "null" }
+            ],
+            "title": "Tax Id",
+            "description": "Federal EIN or equivalent business tax identifier.",
+            "example": "12-3456789"
+          },
+          "vat_number": {
+            "anyOf": [
+              { "type": "string", "maxLength": 50 },
+              { "type": "null" }
+            ],
+            "title": "Vat Number",
+            "description": "VAT registration number for international billing.",
+            "example": "GB123456789"
+          },
+          "tax_exempt": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Tax Exempt",
+            "description": "Mark true when the business has verified tax exempt status.",
+            "example": false
+          },
+          "tax_exempt_note": {
+            "anyOf": [
+              { "type": "string", "maxLength": 500 },
+              { "type": "null" }
+            ],
+            "title": "Tax Exempt Note",
+            "description": "Internal note stored alongside tax exemption approvals.",
+            "example": "Reseller certificate on file."
+          },
+          "language": {
+            "anyOf": [
+              { "type": "string", "maxLength": 100 },
+              { "type": "null" }
+            ],
+            "title": "Language",
+            "description": "Language lookup locale (see /api/v1/lookups/languages).",
+            "example": "en-US"
+          },
+          "timezone": {
+            "anyOf": [
+              { "type": "string", "maxLength": 100 },
+              { "type": "null" }
+            ],
+            "title": "Timezone",
+            "description": "Timezone lookup IANA name (see /api/v1/lookups/timezones).",
+            "example": "America/New_York"
+          },
+          "currency": {
+            "anyOf": [
+              { "type": "string", "maxLength": 20 },
+              { "type": "null" }
+            ],
+            "title": "Currency",
+            "description": "Currency lookup ISO code (see /api/v1/lookups/currencies).",
+            "example": "USD"
+          },
+          "date_format": {
+            "anyOf": [
+              { "type": "string", "maxLength": 20 },
+              { "type": "null" }
+            ],
+            "title": "Date Format",
+            "description": "Date format lookup mask (see /api/v1/lookups/date-formats).",
+            "example": "MM/DD/YYYY"
+          }
+        },
+        "type": "object",
+        "title": "AccountUpdateRequest"
+      },
+      "AccountUpdateResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/AccountMetadata" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "AccountUpdateResponse"
+      },
+      "AnalyticsRange": {
+        "type": "string",
+        "enum": ["30d", "90d", "12m"],
+        "title": "AnalyticsRange"
+      },
+      "BillingContact": {
+        "properties": {
+          "primary_email": {
+            "type": "string",
+            "title": "Primary Email",
+            "description": "Primary billing inbox that receives invoices and payment notices.",
+            "example": "finance@acmeretail.com"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "description": "Full name of the person responsible for billing.",
+            "example": "Jordan Smith"
+          },
+          "phone": {
+            "anyOf": [
+              { "type": "string", "maxLength": 20 },
+              { "type": "null" }
+            ],
+            "title": "Phone",
+            "description": "Optional direct line for urgent billing follow-ups.",
+            "example": "+1-555-0199"
+          },
+          "cc_emails": {
+            "anyOf": [
+              { "items": { "type": "string" }, "type": "array" },
+              { "type": "null" }
+            ],
+            "title": "Cc Emails",
+            "description": "Additional recipients (up to 5) that should be copied on billing emails.",
+            "example": ["ap@acmeretail.com", "ceo@acmeretail.com"]
+          }
+        },
+        "type": "object",
+        "required": ["primary_email", "name"],
+        "title": "BillingContact"
+      },
+      "BillingContactRequest": {
+        "properties": {
+          "primary_email": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Primary Email",
+            "description": "Required billing inbox (must be deliverable).",
+            "example": "finance@acmeretail.com"
+          },
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Contact name displayed on invoices and billing emails.",
+            "example": "Jordan Smith"
+          },
+          "phone": {
+            "anyOf": [
+              { "type": "string", "maxLength": 20 },
+              { "type": "null" }
+            ],
+            "title": "Phone",
+            "description": "Optional phone number for urgent communication.",
+            "example": "+1-555-0199"
+          },
+          "cc_emails": {
+            "anyOf": [
+              { "items": { "type": "string" }, "type": "array" },
+              { "type": "null" }
+            ],
+            "title": "Cc Emails",
+            "description": "Array of additional emails to CC on billing notices.",
+            "example": ["ap@acmeretail.com", "ceo@acmeretail.com"]
+          }
+        },
+        "type": "object",
+        "required": ["primary_email", "name"],
+        "title": "BillingContactRequest"
+      },
+      "BillingContactResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/BillingContact" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "BillingContactResponse"
+      },
+      "ChangePasswordRequest": {
+        "properties": {
+          "current_password": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Current Password"
+          },
+          "new_password": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 8,
+            "title": "New Password"
+          }
+        },
+        "type": "object",
+        "required": ["current_password", "new_password"],
+        "title": "ChangePasswordRequest"
+      },
+      "ChangePasswordResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": {
+            "additionalProperties": { "type": "string" },
+            "type": "object",
+            "title": "Data"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "ChangePasswordResponse"
+      },
+      "ContactMessageCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Name of the person submitting the contact form",
+            "example": "Jordan Smith"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "description": "Email address for follow-up",
+            "example": "jordan.smith@example.com"
+          },
+          "message": {
+            "type": "string",
+            "maxLength": 2000,
+            "minLength": 1,
+            "title": "Message",
+            "description": "Message provided by the contact",
+            "example": "I'd like to learn more about LaRevela's analytics capabilities."
+          }
+        },
+        "type": "object",
+        "required": ["name", "email", "message"],
+        "title": "ContactMessageCreate"
+      },
+      "ContactMessageCreatePayload": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "Identifier for the stored contact message"
+          }
+        },
+        "type": "object",
+        "required": ["id"],
+        "title": "ContactMessageCreatePayload"
+      },
+      "ContactMessageCreateResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": {
+            "$ref": "#/components/schemas/ContactMessageCreatePayload"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "ContactMessageCreateResponse"
+      },
+      "CreateDraftRequest": {
+        "properties": {
+          "verification_token": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Verification Token",
+            "description": "Verification token returned from the email verification step.",
+            "example": "vtok_abc123xyz"
+          },
+          "full_name": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Full Name",
+            "description": "Account owner's full name (used to pre-fill profile details).",
+            "example": "Jordan Smith"
+          }
+        },
+        "type": "object",
+        "required": ["verification_token", "full_name"],
+        "title": "CreateDraftRequest"
+      },
+      "DemoRequestCreate": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Name",
+            "description": "Full name of the requester",
+            "example": "Jordan Smith"
+          },
+          "company_name": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Company Name",
+            "description": "Company name for the requester",
+            "example": "Acme Brands"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "description": "Work email address for follow-up",
+            "example": "jordan.smith@example.com"
+          },
+          "website": {
+            "anyOf": [
+              { "type": "string", "maxLength": 255 },
+              { "type": "null" }
+            ],
+            "title": "Website",
+            "description": "Primary website for the business",
+            "example": "https://www.acme.com"
+          },
+          "monthly_visitors": {
+            "anyOf": [
+              { "type": "string", "maxLength": 100 },
+              { "type": "null" }
+            ],
+            "title": "Monthly Visitors",
+            "description": "Typical monthly website visitors or traffic band",
+            "example": "10k-50k"
+          },
+          "vertical": {
+            "anyOf": [
+              { "type": "string", "maxLength": 100 },
+              { "type": "null" }
+            ],
+            "title": "Vertical",
+            "description": "Industry or vertical",
+            "example": "E-commerce"
+          },
+          "contact_number": {
+            "anyOf": [
+              { "type": "string", "maxLength": 50 },
+              { "type": "null" }
+            ],
+            "title": "Contact Number",
+            "description": "Best phone number for the requester",
+            "example": "+1-555-0102"
+          },
+          "business_description": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Business Description",
+            "description": "Brief description of the business",
+            "example": "We operate a multi-brand online retail marketplace focused on sustainable products."
+          }
+        },
+        "type": "object",
+        "required": ["name", "company_name", "email"],
+        "title": "DemoRequestCreate"
+      },
+      "DemoRequestCreatePayload": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "description": "Identifier for the stored demo request"
+          }
+        },
+        "type": "object",
+        "required": ["id"],
+        "title": "DemoRequestCreatePayload"
+      },
+      "DemoRequestCreateResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/DemoRequestCreatePayload" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "DemoRequestCreateResponse"
+      },
+      "EventCollectionPayload": {
+        "properties": {
+          "client_id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Client Id"
+          },
+          "tm_vid": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Tm Vid"
+          },
+          "session_id": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Session Id"
+          },
+          "occurred_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Occurred At"
+          },
+          "page": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/PageMetadata" },
+              { "type": "null" }
+            ]
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "required": ["client_id", "tm_vid", "session_id", "occurred_at"],
+        "title": "EventCollectionPayload"
+      },
+      "FinalizeRegistrationAccount": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "example": "acc_9876543210"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "example": "Acme Retail"
+          },
+          "owner_user_id": {
+            "type": "string",
+            "title": "Owner User Id",
+            "example": "usr_1234567890"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "example": "2025-11-19T19:08:13Z"
+          }
+        },
+        "type": "object",
+        "required": ["id", "name", "owner_user_id", "created_at"],
+        "title": "FinalizeRegistrationAccount"
+      },
+      "FinalizeRegistrationPayload": {
+        "properties": {
+          "user": { "$ref": "#/components/schemas/FinalizeRegistrationUser" },
+          "account": {
+            "$ref": "#/components/schemas/FinalizeRegistrationAccount"
+          },
+          "requires_onboarding": {
+            "type": "boolean",
+            "title": "Requires Onboarding",
+            "example": true
+          },
+          "selected_plan": {
+            "type": "string",
+            "title": "Selected Plan",
+            "example": "plan_starter_monthly"
+          }
+        },
+        "type": "object",
+        "required": ["user", "account", "requires_onboarding", "selected_plan"],
+        "title": "FinalizeRegistrationPayload"
+      },
+      "FinalizeRegistrationRequest": {
+        "properties": {
+          "verification_token": {
+            "type": "string",
+            "maxLength": 128,
+            "minLength": 1,
+            "title": "Verification Token",
+            "description": "Verification token returned after email confirmation.",
+            "example": "vtok_abc123xyz"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 8,
+            "title": "Password",
+            "description": "Strong password for the owner account.",
+            "example": "CorrectHorseBatteryStaple!1"
+          },
+          "accept_terms": {
+            "type": "boolean",
+            "title": "Accept Terms",
+            "description": "Must be true to acknowledge Terms of Service and Privacy Policy.",
+            "example": true
+          }
+        },
+        "type": "object",
+        "required": ["verification_token", "password", "accept_terms"],
+        "title": "FinalizeRegistrationRequest"
+      },
+      "FinalizeRegistrationResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": {
+            "$ref": "#/components/schemas/FinalizeRegistrationPayload"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "FinalizeRegistrationResponse"
+      },
+      "FinalizeRegistrationSession": {
+        "properties": {
+          "session_id": {
+            "type": "string",
+            "title": "Session Id",
+            "example": "sess_1234567890abcdef"
+          },
+          "device_fingerprint": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Device Fingerprint",
+            "example": "fp_2f3d4c5b6a"
+          },
+          "remember_me": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Remember Me",
+            "example": false
+          }
+        },
+        "type": "object",
+        "required": ["session_id"],
+        "title": "FinalizeRegistrationSession"
+      },
+      "FinalizeRegistrationUser": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "example": "usr_1234567890"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "example": "founder@example.com"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "example": "Jordan Smith"
+          },
+          "account_id": {
+            "type": "string",
+            "title": "Account Id",
+            "example": "acc_9876543210"
+          },
+          "primary_role": {
+            "type": "string",
+            "title": "Primary Role",
+            "example": "owner"
+          }
+        },
+        "type": "object",
+        "required": ["id", "email", "name", "account_id", "primary_role"],
+        "title": "FinalizeRegistrationUser"
+      },
+      "ForgotPasswordPayload": {
+        "properties": {
+          "reset_token_expires_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Reset Token Expires At"
+          }
+        },
+        "type": "object",
+        "title": "ForgotPasswordPayload"
+      },
+      "ForgotPasswordRequest": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "description": "Email address associated with the account.",
+            "example": "founder@example.com"
+          }
+        },
+        "type": "object",
+        "required": ["email"],
+        "title": "ForgotPasswordRequest"
+      },
+      "ForgotPasswordResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/ForgotPasswordPayload" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "ForgotPasswordResponse"
+      },
+      "GenericBillingResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": {
+            "anyOf": [
+              { "additionalProperties": true, "type": "object" },
+              { "type": "null" }
+            ],
+            "title": "Data"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success"],
+        "title": "GenericBillingResponse"
+      },
+      "GenericSuccessResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": {
+            "anyOf": [
+              {
+                "additionalProperties": {
+                  "anyOf": [{ "type": "string" }, { "type": "boolean" }]
+                },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Data"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success"],
+        "title": "GenericSuccessResponse"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": { "$ref": "#/components/schemas/ValidationError" },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "IdentitiesExportFilters": {
+        "properties": {
+          "range": {
+            "type": "string",
+            "const": "custom",
+            "title": "Range",
+            "description": "Export range type. UI always sends 'custom' with explicit dates.",
+            "default": "custom",
+            "example": "custom"
+          },
+          "from_date": {
+            "anyOf": [
+              { "type": "string", "format": "date" },
+              { "type": "null" }
+            ],
+            "title": "From Date",
+            "description": "Custom range start date (required when range='custom')."
+          },
+          "to_date": {
+            "anyOf": [
+              { "type": "string", "format": "date" },
+              { "type": "null" }
+            ],
+            "title": "To Date",
+            "description": "Custom range end date (required when range='custom')."
+          }
+        },
+        "type": "object",
+        "title": "IdentitiesExportFilters"
+      },
+      "IdentitiesExportRequest": {
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Account Id"
+          },
+          "website_id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Website Id"
+          },
+          "user_id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "User Id"
+          },
+          "filters": {
+            "$ref": "#/components/schemas/IdentitiesExportFilters",
+            "description": "Filter criteria for which identities to export."
+          }
+        },
+        "type": "object",
+        "required": ["account_id", "website_id", "user_id", "filters"],
+        "title": "IdentitiesExportRequest"
+      },
+      "IdentitiesExportResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": {
+            "anyOf": [
+              {
+                "$ref": "#/components/schemas/IdentitiesExportResponsePayload"
+              },
+              { "type": "null" }
+            ]
+          },
+          "error": {
+            "anyOf": [
+              { "additionalProperties": true, "type": "object" },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success"],
+        "title": "IdentitiesExportResponse"
+      },
+      "IdentitiesExportResponsePayload": {
+        "properties": {
+          "export_id": {
+            "type": "string",
+            "title": "Export Id",
+            "description": "Unique ID of the queued export job."
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "description": "Current status of the export job."
+          }
+        },
+        "type": "object",
+        "required": ["export_id", "status"],
+        "title": "IdentitiesExportResponsePayload"
+      },
+      "Invoice": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "example": "inv_9876543210abcd"
+          },
+          "amount": { "type": "integer", "title": "Amount", "example": 29900 },
+          "currency": {
+            "type": "string",
+            "title": "Currency",
+            "example": "USD"
+          },
+          "status": { "type": "string", "title": "Status", "example": "open" },
+          "issued_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Issued At",
+            "example": "2025-11-01T00:00:00Z"
+          }
+        },
+        "type": "object",
+        "required": ["id", "amount", "currency", "status", "issued_at"],
+        "title": "Invoice"
+      },
+      "InvoiceDownloadData": {
+        "properties": {
+          "download_url": { "type": "string", "title": "Download Url" },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          }
+        },
+        "type": "object",
+        "required": ["download_url", "expires_at"],
+        "title": "InvoiceDownloadData"
+      },
+      "InvoiceDownloadResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/InvoiceDownloadData" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "InvoiceDownloadResponse"
+      },
+      "InvoicesListResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": {
+            "items": { "$ref": "#/components/schemas/Invoice" },
+            "type": "array",
+            "title": "Data"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/src__app__schemas__billing__PaginationMeta"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data", "pagination"],
+        "title": "InvoicesListResponse"
+      },
+      "LoginAccount": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "example": "acc_9876543210"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name",
+            "example": "Acme Retail"
+          }
+        },
+        "type": "object",
+        "required": ["id", "name"],
+        "title": "LoginAccount"
+      },
+      "LoginPayload": {
+        "properties": {
+          "user": { "$ref": "#/components/schemas/FinalizeRegistrationUser" },
+          "account": { "$ref": "#/components/schemas/LoginAccount" },
+          "subscription": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/LoginSubscription" },
+              { "type": "null" }
+            ]
+          }
+        },
+        "type": "object",
+        "required": ["user", "account"],
+        "title": "LoginPayload"
+      },
+      "LoginRequest": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "description": "Registered user email.",
+            "example": "founder@example.com"
+          },
+          "password": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 8,
+            "title": "Password",
+            "description": "Account password.",
+            "example": "CorrectHorseBatteryStaple!1"
+          },
+          "remember_me": {
+            "type": "boolean",
+            "title": "Remember Me",
+            "description": "Set true to issue a long-lived refresh token.",
+            "default": false,
+            "example": false
+          },
+          "device_label": {
+            "anyOf": [
+              { "type": "string", "maxLength": 120 },
+              { "type": "null" }
+            ],
+            "title": "Device Label",
+            "description": "Optional device nickname displayed in session management (e.g., 'MacBook Pro').",
+            "example": "MacBook Pro"
+          }
+        },
+        "type": "object",
+        "required": ["email", "password"],
+        "title": "LoginRequest"
+      },
+      "LoginResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/LoginPayload" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "LoginResponse"
+      },
+      "LoginSubscription": {
+        "properties": {
+          "plan_id": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Plan Id",
+            "description": "Active billing plan identifier for the user's account, when available.",
+            "example": "plan_starter_monthly"
+          }
+        },
+        "type": "object",
+        "title": "LoginSubscription"
+      },
+      "LogoutPayload": {
+        "properties": { "message": { "type": "string", "title": "Message" } },
+        "type": "object",
+        "required": ["message"],
+        "title": "LogoutPayload"
+      },
+      "LogoutResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/LogoutPayload" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "LogoutResponse"
+      },
+      "LookupNamesResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": {
+            "items": { "type": "string" },
+            "type": "array",
+            "title": "Data"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "LookupNamesResponse"
+      },
+      "LookupResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": {
+            "items": { "additionalProperties": true, "type": "object" },
+            "type": "array",
+            "title": "Data"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "LookupResponse"
+      },
+      "NotificationPreferences": {
+        "properties": {
+          "invoice_issued": { "type": "boolean", "title": "Invoice Issued" },
+          "payment_failed": { "type": "boolean", "title": "Payment Failed" },
+          "receipt": { "type": "boolean", "title": "Receipt" }
+        },
+        "type": "object",
+        "required": ["invoice_issued", "payment_failed", "receipt"],
+        "title": "NotificationPreferences"
+      },
+      "NotificationPreferencesRequest": {
+        "properties": {
+          "invoice_issued": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Invoice Issued"
+          },
+          "payment_failed": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Payment Failed"
+          },
+          "receipt": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Receipt"
+          }
+        },
+        "type": "object",
+        "title": "NotificationPreferencesRequest"
+      },
+      "NotificationPreferencesResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/NotificationPreferences" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "NotificationPreferencesResponse"
+      },
+      "PageMetadata": {
+        "properties": {
+          "url": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Url"
+          },
+          "host": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Host"
+          },
+          "path": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Path"
+          },
+          "query": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Query"
+          },
+          "title": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Title"
+          },
+          "referrer": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Referrer"
+          },
+          "utm": {
+            "anyOf": [
+              { "additionalProperties": true, "type": "object" },
+              { "type": "null" }
+            ],
+            "title": "Utm"
+          }
+        },
+        "additionalProperties": true,
+        "type": "object",
+        "title": "PageMetadata"
+      },
+      "PaymentMethod": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "example": "pm_1P9f451234567890abcdef"
+          },
+          "brand": { "type": "string", "title": "Brand", "example": "visa" },
+          "last4": { "type": "string", "title": "Last4", "example": "4242" },
+          "exp_month": {
+            "type": "integer",
+            "title": "Exp Month",
+            "example": 12
+          },
+          "exp_year": {
+            "type": "integer",
+            "title": "Exp Year",
+            "example": 2026
+          },
+          "is_default": {
+            "type": "boolean",
+            "title": "Is Default",
+            "default": false,
+            "example": true
+          }
+        },
+        "type": "object",
+        "required": ["id", "brand", "last4", "exp_month", "exp_year"],
+        "title": "PaymentMethod"
+      },
+      "PaymentMethodCreateRequest": {
+        "properties": {
+          "payment_intent_id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Payment Intent Id",
+            "description": "Billing provider payment intent to confirm (e.g., Stripe PI).",
+            "example": "pi_1P9f4s1234567890"
+          },
+          "set_as_default": {
+            "type": "boolean",
+            "title": "Set As Default",
+            "description": "Flag the payment method as default immediately after attaching it.",
+            "default": false,
+            "example": true
+          }
+        },
+        "type": "object",
+        "required": ["payment_intent_id"],
+        "title": "PaymentMethodCreateRequest"
+      },
+      "PaymentMethodUpdateRequest": {
+        "properties": {
+          "set_as_default": {
+            "anyOf": [{ "type": "boolean" }, { "type": "null" }],
+            "title": "Set As Default",
+            "description": "Provide true to designate this method as default, false to remove default flag.",
+            "example": true
+          },
+          "billing_details": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Billing Details",
+            "description": "Optional key/value metadata passed to the billing provider (e.g., name or email).",
+            "example": {
+              "email": "billing@acmeretail.com",
+              "name": "Jordan Smith"
+            }
+          }
+        },
+        "type": "object",
+        "title": "PaymentMethodUpdateRequest"
+      },
+      "PaymentMethodsResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": {
+            "items": { "$ref": "#/components/schemas/PaymentMethod" },
+            "type": "array",
+            "title": "Data"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "PaymentMethodsResponse"
+      },
+      "PixelBootstrapConfig": {
+        "properties": {
+          "aid": {
+            "type": "string",
+            "title": "Aid",
+            "description": "ProspectDesk API key"
+          },
+          "fp_key": {
+            "type": "string",
+            "title": "Fp Key",
+            "description": "Fingerprint API key"
+          },
+          "partner_id": {
+            "type": "string",
+            "title": "Partner Id",
+            "description": "Website partner identifier (website_key)"
+          },
+          "origin": {
+            "type": "string",
+            "title": "Origin",
+            "description": "Origin that requested the configuration"
+          },
+          "tm_key": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Tm Key",
+            "description": "Thumbmark API key"
+          }
+        },
+        "type": "object",
+        "required": ["aid", "fp_key", "partner_id", "origin"],
+        "title": "PixelBootstrapConfig"
+      },
+      "Plan": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "example": "plan_growth_monthly"
+          },
+          "name": { "type": "string", "title": "Name", "example": "Growth" },
+          "price": {
+            "type": "integer",
+            "title": "Price",
+            "description": "Recurring price in minor units (e.g., cents).",
+            "example": 29900
+          },
+          "currency": {
+            "type": "string",
+            "title": "Currency",
+            "example": "USD"
+          },
+          "billing_cycle": {
+            "type": "string",
+            "title": "Billing Cycle",
+            "example": "monthly"
+          },
+          "features": {
+            "items": { "type": "string" },
+            "type": "array",
+            "title": "Features",
+            "example": ["Up to 250K visitors", "Priority support"]
+          },
+          "trial_days": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Trial Days",
+            "description": "Length of free trial in days (null when not available).",
+            "example": 14
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name",
+          "price",
+          "currency",
+          "billing_cycle",
+          "features"
+        ],
+        "title": "Plan"
+      },
+      "PlansResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": {
+            "items": { "$ref": "#/components/schemas/Plan" },
+            "type": "array",
+            "title": "Data"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "PlansResponse"
+      },
+      "ResetPasswordPayload": {
+        "properties": { "message": { "type": "string", "title": "Message" } },
+        "type": "object",
+        "required": ["message"],
+        "title": "ResetPasswordPayload"
+      },
+      "ResetPasswordRequest": {
+        "properties": {
+          "reset_token": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Reset Token",
+            "description": "Reset token supplied via the password reset email.",
+            "example": "rst_Udnn8x0s3yHzp0"
+          },
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "description": "Email address associated with the password reset.",
+            "example": "founder@example.com"
+          },
+          "new_password": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 8,
+            "title": "New Password",
+            "description": "New password that meets complexity requirements.",
+            "example": "CorrectHorseBatteryStaple!1"
+          }
+        },
+        "type": "object",
+        "required": ["reset_token", "email", "new_password"],
+        "title": "ResetPasswordRequest"
+      },
+      "ResetPasswordResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/ResetPasswordPayload" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "ResetPasswordResponse"
+      },
+      "ResetPasswordWithTokenOnlyRequest": {
+        "properties": {
+          "reset_token": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Reset Token",
+            "description": "Reset token supplied via the password reset email.",
+            "example": "rst_Udnn8x0s3yHzp0"
+          },
+          "new_password": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 8,
+            "title": "New Password",
+            "description": "New password that meets complexity requirements.",
+            "example": "CorrectHorseBatteryStaple!1"
+          }
+        },
+        "type": "object",
+        "required": ["reset_token", "new_password"],
+        "title": "ResetPasswordWithTokenOnlyRequest"
+      },
+      "SaveDraftPayload": {
+        "properties": {
+          "draft_id": { "type": "string", "title": "Draft Id" },
+          "verification_token": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Verification Token"
+          }
+        },
+        "type": "object",
+        "required": ["draft_id"],
+        "title": "SaveDraftPayload"
+      },
+      "SaveDraftRequest": {
+        "properties": {
+          "draft_id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Draft Id",
+            "description": "Draft identifier returned when the registration draft was created.",
+            "example": "draft_1234567890abcdef"
+          },
+          "company_name": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Company Name",
+            "description": "Legal or operating name that will appear on invoices and dashboards.",
+            "example": "Acme Retail"
+          },
+          "company_website": {
+            "type": "string",
+            "minLength": 1,
+            "format": "uri",
+            "title": "Company Website",
+            "description": "Primary website or storefront domain for the company.",
+            "example": "https://acmeretail.com"
+          },
+          "verification_token": {
+            "anyOf": [
+              { "type": "string", "maxLength": 128, "minLength": 1 },
+              { "type": "null" }
+            ],
+            "title": "Verification Token",
+            "description": "Optional verification token to guard against stale drafts.",
+            "example": "vtok_abc123xyz"
+          }
+        },
+        "additionalProperties": false,
+        "type": "object",
+        "required": ["draft_id", "company_name", "company_website"],
+        "title": "SaveDraftRequest"
+      },
+      "SaveDraftResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/SaveDraftPayload" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "SaveDraftResponse"
+      },
+      "SendVerificationRequest": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "description": "Email address for the prospective account owner.",
+            "example": "founder@example.com"
+          },
+          "plan": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Plan",
+            "description": "Plan code from GET /api/v1/billing/plans (for example, Starter or Growth tiers).",
+            "example": "plan_starter_monthly"
+          }
+        },
+        "type": "object",
+        "required": ["email", "plan"],
+        "title": "SendVerificationRequest"
+      },
+      "SendVerificationResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/VerificationPayload" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "SendVerificationResponse"
+      },
+      "SubscribeRequest": {
+        "properties": {
+          "plan_id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Plan Id",
+            "description": "Plan identifier from GET /api/v1/billing/plans.",
+            "example": "plan_growth_monthly"
+          },
+          "payment_method_id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Payment Method Id",
+            "description": "Customer payment method identifier returned by Stripe or the billing provider.",
+            "example": "pm_1P9f451234567890abcdef"
+          },
+          "coupon_code": {
+            "anyOf": [
+              { "type": "string", "maxLength": 64 },
+              { "type": "null" }
+            ],
+            "title": "Coupon Code",
+            "description": "Optional coupon or promotion code.",
+            "example": "WELCOME25"
+          },
+          "start_immediately": {
+            "type": "boolean",
+            "title": "Start Immediately",
+            "description": "Start the subscription immediately; if false, schedule for the next billing anchor.",
+            "default": true,
+            "example": true
+          }
+        },
+        "type": "object",
+        "required": ["plan_id", "payment_method_id"],
+        "title": "SubscribeRequest"
+      },
+      "SubscribeResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/SubscriptionSummary" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "SubscribeResponse"
+      },
+      "SubscriptionCancelRequest": {
+        "properties": {
+          "cancel_at_period_end": {
+            "type": "boolean",
+            "title": "Cancel At Period End",
+            "description": "If true, allow the subscription to finish the current period before cancelling.",
+            "default": true,
+            "example": true
+          },
+          "reason": {
+            "anyOf": [
+              { "type": "string", "maxLength": 100 },
+              { "type": "null" }
+            ],
+            "title": "Reason",
+            "description": "Optional cancellation reason for internal analytics.",
+            "example": "Switching to in-house solution"
+          }
+        },
+        "type": "object",
+        "title": "SubscriptionCancelRequest"
+      },
+      "SubscriptionDetail": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "example": "sub_1234567890abcdef"
+          },
+          "plan_id": {
+            "type": "string",
+            "title": "Plan Id",
+            "example": "plan_growth_monthly"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "example": "trialing"
+          },
+          "current_period_start": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Current Period Start",
+            "example": "2025-11-01T00:00:00Z"
+          },
+          "current_period_end": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Current Period End",
+            "example": "2025-12-01T00:00:00Z"
+          },
+          "trial": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/SubscriptionTrial" },
+              { "type": "null" }
+            ],
+            "example": { "days_left": 7, "is_in_trial": true }
+          },
+          "usage": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/SubscriptionUsage" },
+              { "type": "null" }
+            ],
+            "example": {
+              "identity_credits_limit": 500,
+              "identity_credits_used": 50,
+              "visitors_limit": 250000,
+              "visitors_used": 4200
+            }
+          }
+        },
+        "type": "object",
+        "required": ["id", "plan_id", "status"],
+        "title": "SubscriptionDetail"
+      },
+      "SubscriptionResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/SubscriptionDetail" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "SubscriptionResponse"
+      },
+      "SubscriptionSummary": {
+        "properties": {
+          "subscription_id": {
+            "type": "string",
+            "title": "Subscription Id",
+            "example": "sub_1234567890abcdef"
+          },
+          "status": { "type": "string", "title": "Status", "example": "active" }
+        },
+        "type": "object",
+        "required": ["subscription_id", "status"],
+        "title": "SubscriptionSummary"
+      },
+      "SubscriptionTrial": {
+        "properties": {
+          "is_in_trial": { "type": "boolean", "title": "Is In Trial" },
+          "days_left": { "type": "integer", "title": "Days Left" }
+        },
+        "type": "object",
+        "required": ["is_in_trial", "days_left"],
+        "title": "SubscriptionTrial"
+      },
+      "SubscriptionUpdateRequest": {
+        "properties": {
+          "plan_id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Plan Id",
+            "description": "New plan identifier to switch to.",
+            "example": "plan_growth_annual"
+          },
+          "prorate": {
+            "type": "boolean",
+            "title": "Prorate",
+            "description": "If true, calculate immediate proration charges or credits when switching plans.",
+            "default": true,
+            "example": true
+          }
+        },
+        "type": "object",
+        "required": ["plan_id"],
+        "title": "SubscriptionUpdateRequest"
+      },
+      "SubscriptionUsage": {
+        "properties": {
+          "visitors_used": { "type": "integer", "title": "Visitors Used" },
+          "visitors_limit": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Visitors Limit"
+          },
+          "identity_credits_used": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Identity Credits Used"
+          },
+          "identity_credits_limit": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Identity Credits Limit"
+          }
+        },
+        "type": "object",
+        "required": ["visitors_used"],
+        "title": "SubscriptionUsage"
+      },
+      "TeamInviteRequest": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 5,
+            "title": "Email",
+            "description": "Email address to invite to the organisation.",
+            "example": "teammate@example.com"
+          },
+          "role": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Role",
+            "description": "Team role slug (see /api/v1/lookups/team-roles).",
+            "example": "admin"
+          },
+          "message": {
+            "anyOf": [
+              { "type": "string", "maxLength": 500 },
+              { "type": "null" }
+            ],
+            "title": "Message",
+            "description": "Optional personal message included in the invitation email.",
+            "example": "Welcome aboard! Here's access to the dashboard."
+          },
+          "require_2fa": {
+            "type": "boolean",
+            "title": "Require 2Fa",
+            "description": "Force the invited user to enable 2FA on first login.",
+            "default": false,
+            "example": true
+          }
+        },
+        "type": "object",
+        "required": ["email", "role"],
+        "title": "TeamInviteRequest"
+      },
+      "TeamInviteResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": {
+            "additionalProperties": { "type": "string" },
+            "type": "object",
+            "title": "Data"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "TeamInviteResponse"
+      },
+      "TeamMember": {
+        "properties": {
+          "id": { "type": "string", "title": "Id" },
+          "name": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Name"
+          },
+          "email": { "type": "string", "title": "Email" },
+          "role": { "type": "string", "title": "Role" },
+          "two_factor_enabled": {
+            "type": "boolean",
+            "title": "Two Factor Enabled"
+          },
+          "last_active_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Last Active At"
+          },
+          "status": { "type": "string", "title": "Status" }
+        },
+        "type": "object",
+        "required": ["id", "email", "role", "two_factor_enabled", "status"],
+        "title": "TeamMember"
+      },
+      "TeamMemberUpdateRequest": {
+        "properties": {
+          "role": {
+            "anyOf": [
+              { "type": "string", "maxLength": 20 },
+              { "type": "null" }
+            ],
+            "title": "Role",
+            "description": "Updated team role slug (see /api/v1/lookups/team-roles).",
+            "example": "analyst"
+          },
+          "status": {
+            "anyOf": [
+              { "type": "string", "maxLength": 20 },
+              { "type": "null" }
+            ],
+            "title": "Status",
+            "description": "Member status (for example 'active' or 'suspended').",
+            "example": "active"
+          }
+        },
+        "type": "object",
+        "title": "TeamMemberUpdateRequest"
+      },
+      "TeamMembersResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": {
+            "items": { "$ref": "#/components/schemas/TeamMember" },
+            "type": "array",
+            "title": "Data"
+          },
+          "pagination": {
+            "additionalProperties": {
+              "anyOf": [{ "type": "integer" }, { "type": "boolean" }]
+            },
+            "type": "object",
+            "title": "Pagination"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data", "pagination"],
+        "title": "TeamMembersResponse"
+      },
+      "TeamSecuritySettingsRequest": {
+        "properties": {
+          "require_2fa": {
+            "type": "boolean",
+            "title": "Require 2Fa",
+            "description": "When true, all users must enrol in time-based one-time passwords.",
+            "example": true
+          },
+          "sso_only": {
+            "type": "boolean",
+            "title": "Sso Only",
+            "description": "Restrict sign-in to SSO providers and disable password login.",
+            "example": false
+          }
+        },
+        "type": "object",
+        "required": ["require_2fa", "sso_only"],
+        "title": "TeamSecuritySettingsRequest"
+      },
+      "TwoFactorEnableRequest": {
+        "properties": {
+          "method": {
+            "type": "string",
+            "pattern": "^[a-z0-9_\\-]+$",
+            "title": "Method"
+          }
+        },
+        "type": "object",
+        "required": ["method"],
+        "title": "TwoFactorEnableRequest"
+      },
+      "TwoFactorEnableResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/TwoFactorSetupPayload" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "TwoFactorEnableResponse"
+      },
+      "TwoFactorSetupPayload": {
+        "properties": {
+          "secret": { "type": "string", "title": "Secret" },
+          "qr_uri": { "type": "string", "title": "Qr Uri" }
+        },
+        "type": "object",
+        "required": ["secret", "qr_uri"],
+        "title": "TwoFactorSetupPayload"
+      },
+      "TwoFactorVerifyRequest": {
+        "properties": {
+          "code": {
+            "type": "string",
+            "maxLength": 6,
+            "minLength": 6,
+            "pattern": "^\\d{6}$",
+            "title": "Code"
+          }
+        },
+        "type": "object",
+        "required": ["code"],
+        "title": "TwoFactorVerifyRequest"
+      },
+      "TwoFactorVerifyResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": {
+            "additionalProperties": {
+              "anyOf": [{ "type": "string" }, { "type": "boolean" }]
+            },
+            "type": "object",
+            "title": "Data"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "TwoFactorVerifyResponse"
+      },
+      "UserProfile": {
+        "properties": {
+          "user_id": { "type": "string", "title": "User Id" },
+          "email": { "type": "string", "title": "Email" },
+          "secondary_email": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Secondary Email"
+          },
+          "first_name": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "First Name"
+          },
+          "last_name": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Last Name"
+          },
+          "phone": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Phone"
+          },
+          "job_title": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Job Title"
+          },
+          "department": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Department"
+          },
+          "photo": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Photo"
+          },
+          "language_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Language Id"
+          },
+          "language": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Language"
+          },
+          "timezone_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Timezone Id"
+          },
+          "timezone": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Timezone"
+          },
+          "currency_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Currency Id"
+          },
+          "currency": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Currency"
+          },
+          "time_format_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Time Format Id"
+          },
+          "time_format": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Time Format"
+          },
+          "number_format_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "Number Format Id"
+          },
+          "number_format": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Number Format"
+          },
+          "first_day_id": {
+            "anyOf": [{ "type": "integer" }, { "type": "null" }],
+            "title": "First Day Id"
+          },
+          "first_day_of_week": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "First Day Of Week"
+          },
+          "created_by": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Created By"
+          },
+          "updated_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Updated At"
+          },
+          "account_id": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Account Id"
+          },
+          "account_legal_name": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Account Legal Name"
+          },
+          "account_name": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Account Name"
+          },
+          "role": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Role"
+          }
+        },
+        "type": "object",
+        "required": ["user_id", "email"],
+        "title": "UserProfile"
+      },
+      "UserProfileResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/UserProfile" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "UserProfileResponse"
+      },
+      "UserProfileUpdateRequest": {
+        "properties": {
+          "first_name": {
+            "anyOf": [
+              { "type": "string", "maxLength": 100 },
+              { "type": "null" }
+            ],
+            "title": "First Name",
+            "description": "Given name used in greetings and notifications.",
+            "example": "Jordan"
+          },
+          "last_name": {
+            "anyOf": [
+              { "type": "string", "maxLength": 100 },
+              { "type": "null" }
+            ],
+            "title": "Last Name",
+            "description": "Family name shown in account directories.",
+            "example": "Smith"
+          },
+          "job_title": {
+            "anyOf": [
+              { "type": "string", "maxLength": 100 },
+              { "type": "null" }
+            ],
+            "title": "Job Title",
+            "description": "Role or title displayed to teammates.",
+            "example": "Director of Lifecycle Marketing"
+          },
+          "phone": {
+            "anyOf": [
+              { "type": "string", "maxLength": 50 },
+              { "type": "null" }
+            ],
+            "title": "Phone",
+            "description": "Optional phone number for billing or alerts.",
+            "example": "+1-555-0123"
+          },
+          "department": {
+            "anyOf": [
+              { "type": "string", "maxLength": 100 },
+              { "type": "null" }
+            ],
+            "title": "Department",
+            "description": "Team or department association used in reports.",
+            "example": "Marketing"
+          },
+          "photo": {
+            "anyOf": [
+              { "type": "string", "maxLength": 1000 },
+              { "type": "null" }
+            ],
+            "title": "Photo",
+            "description": "Hosted image URL for the user's avatar.",
+            "example": "https://cdn.larevela.com/avatars/usr_123.png"
+          },
+          "language": {
+            "anyOf": [
+              { "type": "string", "maxLength": 20 },
+              { "type": "null" }
+            ],
+            "title": "Language",
+            "description": "Language lookup locale code (see /api/v1/lookups/languages).",
+            "example": "en-US"
+          },
+          "timezone": {
+            "anyOf": [
+              { "type": "string", "maxLength": 100 },
+              { "type": "null" }
+            ],
+            "title": "Timezone",
+            "description": "Timezone lookup IANA name (see /api/v1/lookups/timezones).",
+            "example": "America/New_York"
+          },
+          "currency": {
+            "anyOf": [
+              { "type": "string", "maxLength": 20 },
+              { "type": "null" }
+            ],
+            "title": "Currency",
+            "description": "Currency lookup ISO code (see /api/v1/lookups/currencies).",
+            "example": "USD"
+          },
+          "time_format": {
+            "anyOf": [
+              { "type": "string", "maxLength": 10 },
+              { "type": "null" }
+            ],
+            "title": "Time Format",
+            "description": "Time format preference lookup (see /api/v1/lookups/time-formats).",
+            "example": "12h"
+          },
+          "number_format": {
+            "anyOf": [
+              { "type": "string", "maxLength": 20 },
+              { "type": "null" }
+            ],
+            "title": "Number Format",
+            "description": "Number formatting mask (see /api/v1/lookups/number-formats).",
+            "example": "1,234.56"
+          },
+          "first_day_of_week": {
+            "anyOf": [
+              { "type": "string", "maxLength": 10 },
+              { "type": "null" }
+            ],
+            "title": "First Day Of Week",
+            "description": "First-day-of-week lookup code (see /api/v1/lookups/first-day-of-week).",
+            "example": "monday"
+          },
+          "secondary_email": {
+            "anyOf": [
+              { "type": "string", "maxLength": 255 },
+              { "type": "null" }
+            ],
+            "title": "Secondary Email",
+            "description": "Optional backup email for critical notifications.",
+            "example": "team@acmeretail.com"
+          }
+        },
+        "type": "object",
+        "title": "UserProfileUpdateRequest"
+      },
+      "UserProfileUpdateResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/UserProfile" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "UserProfileUpdateResponse"
+      },
+      "UserSession": {
+        "properties": {
+          "id": { "type": "string", "title": "Id" },
+          "user_agent": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "User Agent"
+          },
+          "device_label": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Device Label"
+          },
+          "ip_address": {
+            "anyOf": [{ "type": "string" }, { "type": "null" }],
+            "title": "Ip Address"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At"
+          },
+          "last_seen_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Last Seen At"
+          },
+          "current": { "type": "boolean", "title": "Current", "default": false }
+        },
+        "type": "object",
+        "required": ["id", "created_at", "last_seen_at"],
+        "title": "UserSession"
+      },
+      "UserSessionsPayload": {
+        "properties": {
+          "sessions": {
+            "items": { "$ref": "#/components/schemas/UserSession" },
+            "type": "array",
+            "title": "Sessions"
+          }
+        },
+        "type": "object",
+        "required": ["sessions"],
+        "title": "UserSessionsPayload"
+      },
+      "UserSessionsResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/UserSessionsPayload" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "UserSessionsResponse"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": { "anyOf": [{ "type": "string" }, { "type": "integer" }] },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": { "type": "string", "title": "Message" },
+          "type": { "type": "string", "title": "Error Type" }
+        },
+        "type": "object",
+        "required": ["loc", "msg", "type"],
+        "title": "ValidationError"
+      },
+      "VendorSecret": {
+        "properties": {
+          "config": {
+            "additionalProperties": true,
+            "type": "object",
+            "title": "Config",
+            "description": "Arbitrary vendor-specific configuration (secrets, IDs, etc.)"
+          }
+        },
+        "type": "object",
+        "title": "VendorSecret",
+        "description": "Generic vendor secret payload for a website.\n\nThe shape is intentionally flexible so we can support many vendors\n(klaviyo, shopify, mailchimp, meta, google_ads, etc.)."
+      },
+      "VerificationPayload": {
+        "properties": {
+          "verification_id": { "type": "string", "title": "Verification Id" },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          }
+        },
+        "type": "object",
+        "required": ["verification_id", "expires_at"],
+        "title": "VerificationPayload"
+      },
+      "VerifyEmailPayload": {
+        "properties": {
+          "verification_token": {
+            "type": "string",
+            "title": "Verification Token"
+          },
+          "expires_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Expires At"
+          }
+        },
+        "type": "object",
+        "required": ["verification_token", "expires_at"],
+        "title": "VerifyEmailPayload"
+      },
+      "VerifyEmailRequest": {
+        "properties": {
+          "email": {
+            "type": "string",
+            "format": "email",
+            "title": "Email",
+            "description": "Email address that received the verification code.",
+            "example": "founder@example.com"
+          },
+          "verification_id": {
+            "type": "string",
+            "maxLength": 64,
+            "minLength": 1,
+            "title": "Verification Id",
+            "description": "Verification request identifier returned from step 1.",
+            "example": "ver_9f3c12d9c7b4"
+          },
+          "verification_code": {
+            "type": "string",
+            "pattern": "^\\d{6}$",
+            "title": "Verification Code",
+            "description": "Six digit verification code delivered via email.",
+            "example": "123456"
+          }
+        },
+        "type": "object",
+        "required": ["email", "verification_id", "verification_code"],
+        "title": "VerifyEmailRequest"
+      },
+      "VerifyEmailResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/VerifyEmailPayload" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "VerifyEmailResponse"
+      },
+      "Website": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "example": "site_1234567890abcdef"
+          },
+          "account_id": {
+            "type": "string",
+            "title": "Account Id",
+            "example": "acc_9876543210"
+          },
+          "domain": {
+            "type": "string",
+            "title": "Domain",
+            "example": "store.acmeretail.com"
+          },
+          "status": {
+            "$ref": "#/components/schemas/WebsiteStatusEnum",
+            "example": "verifying"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "example": "2025-11-19T18:40:12Z"
+          }
+        },
+        "type": "object",
+        "required": ["id", "account_id", "domain", "status", "created_at"],
+        "title": "Website"
+      },
+      "WebsiteCreateRequest": {
+        "properties": {
+          "account_id": {
+            "type": "string",
+            "maxLength": 32,
+            "minLength": 1,
+            "title": "Account Id",
+            "description": "Account identifier that will own the website.",
+            "example": "acc_9876543210"
+          },
+          "domain": {
+            "type": "string",
+            "maxLength": 255,
+            "minLength": 1,
+            "title": "Domain",
+            "description": "Fully-qualified domain name for the storefront.",
+            "example": "store.acmeretail.com"
+          },
+          "platform": {
+            "type": "string",
+            "maxLength": 100,
+            "minLength": 1,
+            "title": "Platform",
+            "description": "Commerce platform slug (see /api/v1/lookups/platforms when available).",
+            "example": "shopify"
+          }
+        },
+        "type": "object",
+        "required": ["account_id", "domain", "platform"],
+        "title": "WebsiteCreateRequest"
+      },
+      "WebsiteCreateResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/Website" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "WebsiteCreateResponse"
+      },
+      "WebsiteDeleteResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/WebsiteDeleteResult" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "WebsiteDeleteResponse"
+      },
+      "WebsiteDeleteResult": {
+        "properties": {
+          "deleted": { "type": "boolean", "title": "Deleted", "example": true }
+        },
+        "type": "object",
+        "required": ["deleted"],
+        "title": "WebsiteDeleteResult"
+      },
+      "WebsiteDetail": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "example": "site_1234567890abcdef"
+          },
+          "account_id": {
+            "type": "string",
+            "title": "Account Id",
+            "example": "acc_9876543210"
+          },
+          "domain": {
+            "type": "string",
+            "title": "Domain",
+            "example": "store.acmeretail.com"
+          },
+          "status": {
+            "$ref": "#/components/schemas/WebsiteStatusEnum",
+            "example": "live"
+          },
+          "platform": {
+            "type": "string",
+            "title": "Platform",
+            "example": "shopify"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "example": "2025-10-15T14:22:00Z"
+          },
+          "last_seen_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Last Seen At",
+            "example": "2025-11-18T22:01:45Z"
+          },
+          "verification": {
+            "$ref": "#/components/schemas/WebsiteVerificationInfo"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "account_id",
+          "domain",
+          "status",
+          "platform",
+          "created_at",
+          "verification"
+        ],
+        "title": "WebsiteDetail"
+      },
+      "WebsiteDetailResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/WebsiteDetail" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "WebsiteDetailResponse"
+      },
+      "WebsiteListItem": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id",
+            "example": "site_1234567890abcdef"
+          },
+          "account_id": {
+            "type": "string",
+            "title": "Account Id",
+            "example": "acc_9876543210"
+          },
+          "domain": {
+            "type": "string",
+            "title": "Domain",
+            "example": "store.acmeretail.com"
+          },
+          "status": {
+            "$ref": "#/components/schemas/WebsiteStatusEnum",
+            "example": "live"
+          },
+          "platform": {
+            "type": "string",
+            "title": "Platform",
+            "example": "shopify"
+          },
+          "created_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Created At",
+            "example": "2025-10-15T14:22:00Z"
+          },
+          "last_seen_at": {
+            "anyOf": [
+              { "type": "string", "format": "date-time" },
+              { "type": "null" }
+            ],
+            "title": "Last Seen At",
+            "example": "2025-11-18T22:01:45Z"
+          },
+          "privacy_acknowledged": {
+            "type": "string",
+            "title": "Privacy Acknowledged",
+            "default": "No",
+            "example": "Yes"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "account_id",
+          "domain",
+          "status",
+          "platform",
+          "created_at"
+        ],
+        "title": "WebsiteListItem"
+      },
+      "WebsiteListResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": {
+            "items": { "$ref": "#/components/schemas/WebsiteListItem" },
+            "type": "array",
+            "title": "Data"
+          },
+          "pagination": {
+            "$ref": "#/components/schemas/src__app__schemas__website__PaginationMeta"
+          },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data", "pagination"],
+        "title": "WebsiteListResponse"
+      },
+      "WebsitePrivacyAckRequest": {
+        "properties": {
+          "acknowledged_at": {
+            "type": "string",
+            "format": "date-time",
+            "title": "Acknowledged At",
+            "description": "Timestamp when privacy terms were acknowledged.",
+            "example": "2025-11-19T18:45:00Z"
+          },
+          "acknowledged_by": {
+            "type": "string",
+            "maxLength": 32,
+            "minLength": 1,
+            "title": "Acknowledged By",
+            "description": "Identifier of the team member confirming the privacy policy.",
+            "example": "usr_1234567890"
+          }
+        },
+        "type": "object",
+        "required": ["acknowledged_at", "acknowledged_by"],
+        "title": "WebsitePrivacyAckRequest"
+      },
+      "WebsiteStatusEnum": {
+        "type": "string",
+        "enum": ["pending", "verifying", "live", "error", "disabled"],
+        "title": "WebsiteStatusEnum",
+        "description": "Website status enumeration."
+      },
+      "WebsiteUpdateRequest": {
+        "properties": {
+          "display_name": {
+            "anyOf": [
+              { "type": "string", "maxLength": 255 },
+              { "type": "null" }
+            ],
+            "title": "Display Name",
+            "description": "Friendly name shown in dashboards (kept separate from domain).",
+            "example": "Acme Flagship Store"
+          },
+          "platform": {
+            "anyOf": [
+              { "type": "string", "maxLength": 100 },
+              { "type": "null" }
+            ],
+            "title": "Platform",
+            "description": "Updated platform slug.",
+            "example": "shopify"
+          }
+        },
+        "type": "object",
+        "title": "WebsiteUpdateRequest"
+      },
+      "WebsiteVendorConfigUpdate": {
+        "properties": {
+          "vendors": {
+            "additionalProperties": {
+              "$ref": "#/components/schemas/VendorSecret"
+            },
+            "type": "object",
+            "title": "Vendors",
+            "description": "Mapping of vendor_code to vendor configuration payload."
+          }
+        },
+        "type": "object",
+        "title": "WebsiteVendorConfigUpdate",
+        "description": "Request body for updating website-specific vendor configs.\n\nEach key is a vendor_code (e.g. 'klaviyo', 'shopify', 'mailchimp')."
+      },
+      "WebsiteVerificationInfo": {
+        "properties": {
+          "status": {
+            "anyOf": [
+              { "$ref": "#/components/schemas/WebsiteStatusEnum" },
+              { "type": "null" }
+            ]
+          }
+        },
+        "type": "object",
+        "title": "WebsiteVerificationInfo"
+      },
+      "WebsiteVerificationJob": {
+        "properties": {
+          "verification_job_id": {
+            "type": "string",
+            "title": "Verification Job Id",
+            "example": "wvj_1234567890abcdef"
+          },
+          "status": {
+            "type": "string",
+            "title": "Status",
+            "example": "success"
+          }
+        },
+        "type": "object",
+        "required": ["verification_job_id", "status"],
+        "title": "WebsiteVerificationJob"
+      },
+      "WebsiteVerificationResponse": {
+        "properties": {
+          "success": { "type": "boolean", "title": "Success" },
+          "data": { "$ref": "#/components/schemas/WebsiteVerificationJob" },
+          "error": {
+            "anyOf": [
+              {
+                "additionalProperties": { "type": "string" },
+                "type": "object"
+              },
+              { "type": "null" }
+            ],
+            "title": "Error"
+          }
+        },
+        "type": "object",
+        "required": ["success", "data"],
+        "title": "WebsiteVerificationResponse"
+      },
+      "WebsiteVerificationTriggerRequest": {
+        "properties": {
+          "triggered_by": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Triggered By",
+            "description": "Actor that initiated verification (for example 'system' or 'user').",
+            "example": "system"
+          },
+          "mode": {
+            "type": "string",
+            "maxLength": 20,
+            "minLength": 1,
+            "title": "Mode",
+            "description": "Verification mode (e.g., 'auto' or 'manual').",
+            "example": "manual"
+          }
+        },
+        "type": "object",
+        "required": ["triggered_by", "mode"],
+        "title": "WebsiteVerificationTriggerRequest"
+      },
+      "src__app__schemas__billing__PaginationMeta": {
+        "properties": {
+          "page": { "type": "integer", "title": "Page" },
+          "limit": { "type": "integer", "title": "Limit" },
+          "total": { "type": "integer", "title": "Total" },
+          "has_next": { "type": "boolean", "title": "Has Next" }
+        },
+        "type": "object",
+        "required": ["page", "limit", "total", "has_next"],
+        "title": "PaginationMeta"
+      },
+      "src__app__schemas__website__PaginationMeta": {
+        "properties": {
+          "page": { "type": "integer", "title": "Page", "example": 1 },
+          "limit": { "type": "integer", "title": "Limit", "example": 25 },
+          "total": { "type": "integer", "title": "Total", "example": 42 },
+          "has_next": {
+            "type": "boolean",
+            "title": "Has Next",
+            "example": true
+          }
+        },
+        "type": "object",
+        "required": ["page", "limit", "total", "has_next"],
+        "title": "PaginationMeta"
+      }
+    }
+  }
+}

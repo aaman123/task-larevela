@@ -1,20 +1,21 @@
-import { useState, useCallback, useEffect } from 'react';
-import { createWalletClient, custom, type Address } from 'viem';
-import { mainnet } from 'viem/chains';
-import { CHAIN_ID, readBalance, writeTransfer } from '../blockchain';
+import { useState, useCallback, useEffect } from "react";
+import { createWalletClient, custom, type Address } from "viem";
+import { mainnet } from "viem/chains";
+import { CHAIN_ID, readBalance, writeTransfer } from "../blockchain";
 
 const chain = CHAIN_ID === 1 ? mainnet : mainnet;
 
-export type TxStatus = 'idle' | 'pending' | 'success' | 'error';
+export type TxStatus = "idle" | "pending" | "success" | "error";
 
 export function useWallet() {
   const [address, setAddress] = useState<Address | null>(null);
   const [balance, setBalance] = useState<bigint | null>(null);
-  const [txStatus, setTxStatus] = useState<TxStatus>('idle');
+  const [txStatus, setTxStatus] = useState<TxStatus>("idle");
   const [error, setError] = useState<string | null>(null);
 
   const getWalletClient = useCallback(() => {
-    const provider = typeof window !== 'undefined' ? window.ethereum : undefined;
+    const provider =
+      typeof window !== "undefined" ? window.ethereum : undefined;
     if (!provider) return null;
     return createWalletClient({
       chain,
@@ -27,16 +28,18 @@ export function useWallet() {
     try {
       const provider = window.ethereum;
       if (!provider) {
-        setError('No wallet found. Install MetaMask or another Web3 wallet.');
+        setError("No wallet found. Install MetaMask or another Web3 wallet.");
         return;
       }
-      const [acc] = (await provider.request({ method: 'eth_requestAccounts' })) as Address[];
+      const [acc] = (await provider.request({
+        method: "eth_requestAccounts",
+      })) as Address[];
       if (!acc) return;
       setAddress(acc);
       const bal = await readBalance(acc);
       setBalance(bal);
     } catch (e) {
-      setError(e instanceof Error ? e.message : 'Failed to connect');
+      setError(e instanceof Error ? e.message : "Failed to connect");
     }
   }, []);
 
@@ -44,34 +47,34 @@ export function useWallet() {
     setAddress(null);
     setBalance(null);
     setError(null);
-    setTxStatus('idle');
+    setTxStatus("idle");
   }, []);
 
   const transfer = useCallback(
     async (to: Address, amount: bigint) => {
       if (!address) {
-        setError('Connect wallet first');
+        setError("Connect wallet first");
         return;
       }
       const walletClient = getWalletClient();
       if (!walletClient) {
-        setError('Wallet not available');
+        setError("Wallet not available");
         return;
       }
-      setTxStatus('pending');
+      setTxStatus("pending");
       setError(null);
       try {
         const hash = await writeTransfer(walletClient, address, to, amount);
-        setTxStatus('success');
+        setTxStatus("success");
         const newBalance = await readBalance(address);
         setBalance(newBalance);
         return hash;
       } catch (e) {
-        setTxStatus('error');
-        setError(e instanceof Error ? e.message : 'Transaction failed');
+        setTxStatus("error");
+        setError(e instanceof Error ? e.message : "Transaction failed");
       }
     },
-    [address, getWalletClient]
+    [address, getWalletClient],
   );
 
   useEffect(() => {
@@ -86,8 +89,9 @@ export function useWallet() {
       setAddress(acc ?? null);
       if (!acc) setBalance(null);
     };
-    window.ethereum.on?.('accountsChanged', onAccountsChanged);
-    return () => window.ethereum?.removeListener?.('accountsChanged', onAccountsChanged);
+    window.ethereum.on?.("accountsChanged", onAccountsChanged);
+    return () =>
+      window.ethereum?.removeListener?.("accountsChanged", onAccountsChanged);
   }, []);
 
   return {
