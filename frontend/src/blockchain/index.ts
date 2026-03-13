@@ -1,7 +1,8 @@
-export { CHAIN_ID, CONTRACT_ADDRESS, SUPPORTED_CHAINS } from './config';
+export { CHAIN_ID, CONTRACT_ADDRESS, SUPPORTED_CHAINS } from "./config";
 export {
   publicClient,
-  EXAMPLE_ABI,
+  TOKEN_ABI,
   readBalance,
   writeTransfer,
-} from './contract';
+  writeFaucet,
+} from "./contract";
