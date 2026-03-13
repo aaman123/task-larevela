@@ -15,49 +15,49 @@ declare module "hardhat/types/runtime" {
   interface HardhatEthersHelpers extends HardhatEthersHelpersBase {
     getContractFactory(
       name: "LaRevelaToken",
-      signerOrOptions?: ethers.Signer | FactoryOptions,
+      signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<Contracts.LaRevelaToken__factory>;
 
     getContractAt(
       name: "LaRevelaToken",
       address: string | ethers.Addressable,
-      signer?: ethers.Signer,
+      signer?: ethers.Signer
     ): Promise<Contracts.LaRevelaToken>;
 
     deployContract(
       name: "LaRevelaToken",
-      signerOrOptions?: ethers.Signer | DeployContractOptions,
+      signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.LaRevelaToken>;
 
     deployContract(
       name: "LaRevelaToken",
       args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions,
+      signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<Contracts.LaRevelaToken>;
 
     // default types
     getContractFactory(
       name: string,
-      signerOrOptions?: ethers.Signer | FactoryOptions,
+      signerOrOptions?: ethers.Signer | FactoryOptions
     ): Promise<ethers.ContractFactory>;
     getContractFactory(
       abi: any[],
       bytecode: ethers.BytesLike,
-      signer?: ethers.Signer,
+      signer?: ethers.Signer
     ): Promise<ethers.ContractFactory>;
     getContractAt(
       nameOrAbi: string | any[],
       address: string | ethers.Addressable,
-      signer?: ethers.Signer,
+      signer?: ethers.Signer
     ): Promise<ethers.Contract>;
     deployContract(
       name: string,
-      signerOrOptions?: ethers.Signer | DeployContractOptions,
+      signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<ethers.Contract>;
     deployContract(
       name: string,
       args: any[],
-      signerOrOptions?: ethers.Signer | DeployContractOptions,
+      signerOrOptions?: ethers.Signer | DeployContractOptions
     ): Promise<ethers.Contract>;
   }
 }

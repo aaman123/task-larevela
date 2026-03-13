@@ -2,13 +2,23 @@ import {
   createPublicClient,
   createWalletClient,
   http,
+  defineChain,
   type Address,
 } from "viem";
 import { mainnet, sepolia } from "viem/chains";
 import { CHAIN_ID, CONTRACT_ADDRESS } from "./config";
 
+// Hardhat local node — not in viem/chains, define manually
+const hardhat = defineChain({
+  id: 31337,
+  name: "Hardhat Local",
+  nativeCurrency: { name: "Ether", symbol: "ETH", decimals: 18 },
+  rpcUrls: { default: { http: ["http://127.0.0.1:8545"] } },
+});
+
 // Pick the right chain object based on .env VITE_CHAIN_ID
-const chain = CHAIN_ID === 11155111 ? sepolia : mainnet;
+const chain =
+  CHAIN_ID === 11155111 ? sepolia : CHAIN_ID === 31337 ? hardhat : mainnet;
 
 export const publicClient = createPublicClient({
   chain,

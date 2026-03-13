@@ -39,8 +39,8 @@ src/
 | ----------------------- | ----------------------------------------------------------- | -------------------------- |
 | `VITE_API_BASE_URL`     | LaRevela API base URL                                       | `https://api.larevela.com` |
 | `VITE_API_TOKEN`        | Optional Bearer token (leave blank for session-cookie auth) | —                          |
-| `VITE_CHAIN_ID`         | EVM chain ID (`1` = mainnet, `11155111` = Sepolia)          | `1`                        |
-| `VITE_CONTRACT_ADDRESS` | Deployed contract address (`0x…`)                           | placeholder                |
+| `VITE_CHAIN_ID`         | EVM chain ID (`1` = mainnet, `11155111` = Sepolia)          | `11155111`                 |
+| `VITE_CONTRACT_ADDRESS` | Deployed LaRevelaToken address (`0x…`)                      | placeholder (see below)    |
 
 ---
 
@@ -70,11 +70,51 @@ A `GET /api/v1/users/me` call on startup serves as the auth gate — a `401` res
 
 ## Part 2 – Blockchain Smart Contract
 
-> **Pending**: contract ABI and address not yet provided. The existing `BlockchainDemo` page scaffolds wallet connect/disconnect, a contract read (`balanceOf`), and a write (`transfer`) with tx-status feedback. Update `src/blockchain/contract.ts` with your real ABI and `.env` with `VITE_CONTRACT_ADDRESS` / `VITE_CHAIN_ID` when ready.
+- **Library**: [viem](https://viem.sh) — TypeScript-first, tree-shakeable, no ethers.js dependency
+- **Wallet**: MetaMask / any injected EIP-1193 provider
+- **Chain**: Sepolia Testnet (chain ID `11155111`)
+- **Token**: `LaRevelaToken` (LRT) — custom ERC-20 with `balanceOf` (read), `transfer` (write), `faucet` (mint 100 LRT)
+- **Contract source**: `contracts/src/LaRevelaToken.sol`
 
-- Library: **viem** (lightweight, tree-shakeable, TypeScript-first)
-- Wallet: MetaMask / any injected EIP-1193 provider
-- Supported chains: `1` (mainnet), `11155111` (Sepolia) — see `src/blockchain/config.ts`
+### Deploy the contract
+
+```bash
+# 1. Configure secrets
+cp contracts/.env.example contracts/.env
+# Fill in SEPOLIA_RPC_URL (Alchemy/Infura) and DEPLOYER_PRIVATE_KEY
+
+# 2. Deploy to Sepolia
+cd contracts && npm run deploy:sepolia
+# → prints: VITE_CONTRACT_ADDRESS=0x...
+
+# 3. Paste the address into frontend/.env
+cd ../frontend && cp .env.example .env
+# Set VITE_CONTRACT_ADDRESS=0x<printed above>
+```
+
+### Run a local node (optional, for development without Sepolia)
+
+```bash
+# Terminal 1 — start local Hardhat node
+cd contracts && npx hardhat node
+
+# Terminal 2 — deploy to localhost
+cd contracts && npm run deploy:local
+
+# Then set in frontend/.env:
+# VITE_CHAIN_ID=31337
+# VITE_CONTRACT_ADDRESS=0x<local printed address>
+```
+
+### What the Blockchain page does
+
+| Feature                       | Implementation                                  |
+| ----------------------------- | ----------------------------------------------- |
+| Connect / disconnect MetaMask | `useWallet` hook via `eth_requestAccounts`      |
+| Display LRT balance (read)    | `balanceOf(address)` — view call, no gas        |
+| Faucet — mint 100 LRT         | `faucet()` — state-changing tx, MetaMask sign   |
+| Transfer LRT to any address   | `transfer(to, amount)` — state-changing tx      |
+| Tx status feedback            | idle → pending → success/error + Etherscan link |
 
 ---
 
